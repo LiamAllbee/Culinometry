@@ -2,10 +2,8 @@ package com.culinometry.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.culinometry.model.RecipeInstruction;
 
@@ -17,11 +15,8 @@ public interface RecipeInstructionDao {
     LiveData<List<RecipeInstruction>> getAllRecipeInstructionsForRecipe(long recipeId);
 
     @Insert
-    long insert(RecipeInstruction recipeInstruction);
+    List<Long> addAllRecipeInstructions(List<RecipeInstruction> recipeInstructionList);
 
-    @Update
-    void update(RecipeInstruction recipeInstruction);
-
-    @Delete
-    void delete(RecipeInstruction recipeInstruction);
+    @Query("DELETE FROM RecipeInstruction WHERE recipe_id = :recipeId")
+    void removeAllInstructionsForRecipe(long recipeId);
 }
