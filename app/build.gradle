@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {
@@ -22,6 +23,10 @@ android {
                 enable = false
             }
         }
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     compileOptions {
