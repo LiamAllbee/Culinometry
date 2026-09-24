@@ -7,6 +7,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.culinometry.measurement.IngredientMode;
+import com.culinometry.measurement.Unit;
 
 @Entity
 public class Ingredient {
@@ -19,12 +20,20 @@ public class Ingredient {
     private String name;
 
     @Nullable
-    @ColumnInfo(name = "reference_mass_grams")
-    private Double referenceMassGrams;
+    @ColumnInfo(name = "reference_mass")
+    private String referenceMass;
 
     @Nullable
-    @ColumnInfo(name = "reference_volume_ml")
-    private Double referenceVolumeML;
+    @ColumnInfo(name = "mass_unit")
+    private Unit massUnit;
+
+    @Nullable
+    @ColumnInfo(name = "reference_volume")
+    private String referenceVolume;
+
+    @Nullable
+    @ColumnInfo(name = "volume_unit")
+    private Unit volumeUnit;
 
     @NonNull
     @ColumnInfo(name = "mode")
@@ -34,13 +43,17 @@ public class Ingredient {
     private boolean isSoftDeleted;
 
     public Ingredient(@NonNull String name,
-                      @Nullable Double referenceMassGrams,
-                      @Nullable Double referenceVolumeML,
+                      @Nullable String referenceMass,
+                      @Nullable Unit massUnit,
+                      @Nullable String referenceVolume,
+                      @Nullable Unit volumeUnit,
                       @NonNull IngredientMode mode,
                       boolean isSoftDeleted) {
         this.name = name;
-        this.referenceMassGrams = referenceMassGrams;
-        this.referenceVolumeML = referenceVolumeML;
+        this.referenceMass = referenceMass;
+        this.massUnit = massUnit;
+        this.referenceVolume = referenceVolume;
+        this.volumeUnit = volumeUnit;
         this.mode = mode;
         this.isSoftDeleted = isSoftDeleted;
     }
@@ -63,21 +76,39 @@ public class Ingredient {
     }
 
     @Nullable
-    public Double getReferenceMassGrams() {
-        return referenceMassGrams;
+    public String getReferenceMass() {
+        return referenceMass;
     }
 
-    public void setReferenceMassGrams(@Nullable Double referenceMassGrams) {
-        this.referenceMassGrams = referenceMassGrams;
+    public void setReferenceMass(@Nullable String referenceMass) {
+        this.referenceMass = referenceMass;
     }
 
     @Nullable
-    public Double getReferenceVolumeML() {
-        return referenceVolumeML;
+    public Unit getMassUnit() {
+        return massUnit;
     }
 
-    public void setReferenceVolumeML(@Nullable Double referenceVolumeML) {
-        this.referenceVolumeML = referenceVolumeML;
+    public void setMassUnit(@Nullable Unit massUnit) {
+        this.massUnit = massUnit;
+    }
+
+    @Nullable
+    public String getReferenceVolume() {
+        return referenceVolume;
+    }
+
+    public void setReferenceVolume(@Nullable String referenceVolume) {
+        this.referenceVolume = referenceVolume;
+    }
+
+    @Nullable
+    public Unit getVolumeUnit() {
+        return volumeUnit;
+    }
+
+    public void setVolumeUnit(@Nullable Unit volumeUnit) {
+        this.volumeUnit = volumeUnit;
     }
 
     @NonNull

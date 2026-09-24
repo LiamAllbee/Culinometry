@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/recipe_list_fragment">
+
+    <fragment
+        android:id="@+id/recipe_list_fragment"
+        android:name="com.culinometry.ui.fragment.RecipeListFragment"
+        android:label="Recipe List">
+        <action
+            android:id="@+id/action_to_recipeDetailFragment"
+            app:destination="@id/recipe_detail_fragment"/>
+        <action
+            android:id="@+id/action_to_recipeEditorFragment"
+            app:destination="@id/recipe_editor_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_detail_fragment"
+        android:name="com.culinometry.ui.fragment.RecipeDetailFragment"
+        android:label="Recipe Detail">
+        <argument
+            android:name="recipe_id"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_editor_fragment"
+        android:name="com.culinometry.ui.fragment.RecipeEditorFragment"
+        android:label="Recipe Editor">
+        <argument
+            android:name="recipe_id"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ingredient_list_fragment"
+        android:name="com.culinometry.ui.fragment.IngredientListFragment"
+        android:label="Ingredient List">
+        <action
+            android:id="@+id/action_to_ingredientEditorFragment"
+            app:destination="@id/ingredient_editor_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/ingredient_editor_fragment"
+        android:name="com.culinometry.ui.fragment.IngredientEditorFragment"
+        android:label="Ingredient Editor">
+        <argument
+            android:name="ingredient_id"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+
+</navigation>
