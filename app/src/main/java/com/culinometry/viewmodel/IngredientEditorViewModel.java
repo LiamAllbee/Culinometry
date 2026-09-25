@@ -125,7 +125,7 @@ public class IngredientEditorViewModel extends AndroidViewModel {
         ingredientDraft.setMode(mode);
     }
 
-    public void setSoftDeleted(long ingredientId, boolean softDeleted) {
-        repo.setSoftDeleted(ingredientId, softDeleted);
+    public void setSoftDeleted(boolean softDeleted) {
+        repo.setSoftDeleted(ingredientDraft.getIngredientId(), softDeleted);
     }
 }

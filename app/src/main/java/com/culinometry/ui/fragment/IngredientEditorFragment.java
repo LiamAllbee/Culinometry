@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,12 +17,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.culinometry.R;
 import com.culinometry.databinding.FragmentIngredientEditorBinding;
 import com.culinometry.measurement.IngredientMode;
 import com.culinometry.measurement.MeasurementType;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.Ingredient;
 import com.culinometry.viewmodel.IngredientEditorViewModel;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
+import androidx.lifecycle.Lifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +74,7 @@ public class IngredientEditorFragment extends Fragment {
             observeIngredient();
         }
 
+        setupAppBarMenu();
         saveButtonPressed();
     }
 
@@ -74,6 +82,33 @@ public class IngredientEditorFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setupAppBarMenu() {
+        MenuHost menuHost = requireActivity();
+
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                if (!viewModel.isNewIngredient()) {
+                    menuInflater.inflate(R.menu.appbar_ingredient_menu, menu);
+                }
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.action_delete) {
+                    viewModel.setSoftDeleted(true);
+
+                    Navigation.findNavController(requireView()).popBackStack();
+
+                    return true;
+                }
+                return false;
+            }
+
+        },
+                getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 
     private void observeIngredient() {
@@ -230,31 +265,6 @@ public class IngredientEditorFragment extends Fragment {
                 (parent, view, position, id) -> {
             viewModel.setDraftMassUnit(massUnits.get(position));
         });
-
-        // Mass edit text listener
-        binding.massEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.setDraftReferenceMass(charSequence.toString());
-            }
-        });
-
-        // Mass unit drop down listener
-        binding.referenceMassUnitDropdown.setOnItemClickListener(
-                (parent, view, position, id) -> {
-                    viewModel.setDraftMassUnit(massUnits.get(position));
-                }
-        );
 
         // Volume edit text listener
         binding.volumeEditText.addTextChangedListener(new TextWatcher() {
