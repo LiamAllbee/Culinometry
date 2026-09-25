@@ -1,24 +1,34 @@
 package com.culinometry.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.culinometry.databinding.FragmentIngredientEditorBinding;
 import com.culinometry.measurement.IngredientMode;
+import com.culinometry.measurement.MeasurementType;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.Ingredient;
 import com.culinometry.viewmodel.IngredientEditorViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IngredientEditorFragment extends Fragment {
     private FragmentIngredientEditorBinding binding;
     private IngredientEditorViewModel viewModel;
+    private final List<Unit> massUnits = new ArrayList<>();
+    private final List<Unit> volumeUnits = new ArrayList<>();
 
     @Override
     public View onCreateView(
@@ -45,11 +55,18 @@ public class IngredientEditorFragment extends Fragment {
         // Stores the current ingredient into the view models memory
         viewModel.initializeIngredient(ingredientId);
 
-        // If it is an existing ingredient the fields get populated
-        observeIngredient();
-        //// TO-DO Listeners to listen for updates on the page for input validation
-        //// Save button to save the finished ingredient
-//        setupInputListeners();
+        setupUnitDropdowns();
+        setupInputListeners();
+
+        if (viewModel.isNewIngredient()) {
+            // Important preventing new ingredients from getting overwritten if fragment recreates itself
+            populateUIFields(viewModel.getIngredientDraft());
+        }
+        else {
+            // If it is an existing ingredient the fields get populated
+            observeIngredient();
+        }
+
         saveButtonPressed();
     }
 
@@ -88,12 +105,6 @@ public class IngredientEditorFragment extends Fragment {
     }
 
     private void populateUIFields(Ingredient ingredient) {
-        // Leave everything blank if the ingredient is new so that fields don't get populated with
-        // null
-        if (viewModel.isNewIngredient()) {
-            return;
-        }
-
         binding.nameEditText.setText(ingredient.getName());
 
         IngredientMode mode = ingredient.getMode();
@@ -110,53 +121,170 @@ public class IngredientEditorFragment extends Fragment {
             case MASS_AND_VOLUME:
                 // Populate text fields before making the UI visible
                 binding.massAndVolumeButton.setChecked(true);
-
-                //// TO-DO Re-evaluate the if statements here if they are necessary depends on implementation of the input validation
-                if (ingredient.getReferenceMass() != null && ingredient.getMassUnit() != null) {
-                    binding.massEditText.setText(String.valueOf(ingredient.getReferenceMass()));
-                    binding.referenceMassUnitDropdown.setText(String.valueOf(ingredient.getMassUnit()));
-                }
-                if (ingredient.getReferenceVolume() != null && ingredient.getVolumeUnit() != null) {
-                    binding.volumeEditText.setText(String.valueOf(ingredient.getReferenceVolume()));
-                    binding.referenceVolumeUnitDropdown.setText(String.valueOf(ingredient.getVolumeUnit()));
-                }
                 break;
+        }
+
+        if (ingredient.getReferenceMass() != null) {
+            binding.massEditText.setText(String.valueOf(ingredient.getReferenceMass()));
+        }
+        if (ingredient.getMassUnit() != null) {
+            binding.referenceMassUnitDropdown.setText(ingredient.getMassUnit().toString(), false);
+        }
+        if (ingredient.getReferenceVolume() != null) {
+            binding.volumeEditText.setText(String.valueOf(ingredient.getReferenceVolume()));
+        }
+        if (ingredient.getVolumeUnit() != null) {
+            binding.referenceVolumeUnitDropdown.setText(ingredient.getVolumeUnit().toString(), false);
         }
 
         updateModeUI(mode);
     }
 
-    private void saveButtonPressed() {
-        binding.saveIngredientButton.setOnClickListener(view -> {
+    private void setupUnitDropdowns() {
+        massUnits.clear();
+        volumeUnits.clear();
 
-            String name = binding.nameEditText.getText().toString();
+        // Sorts and populates every unit in the Unit ENUM into their respective category
+        for (Unit unit : Unit.values()) {
+            if (unit.getType() == MeasurementType.MASS) {
+                massUnits.add(unit);
+            }
+            else if (unit.getType() == MeasurementType.VOLUME) {
+                volumeUnits.add(unit);
+            }
+        }
 
-            String referenceMass = null;
-            Unit massUnit = null;
-            String referenceVolume = null;
-            Unit volumeUnit = null;
+        // Create adapter that populates each 1line with a Unit from massUnits
+        ArrayAdapter<Unit> massAdapter = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                massUnits
+        );
+
+        // Create adapter that populates each 1line with a Unit from volumeUnits
+        ArrayAdapter<Unit> volumeAdapter = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                volumeUnits
+        );
+
+        // Attach the adapter
+        binding.referenceMassUnitDropdown.setAdapter(massAdapter);
+        binding.referenceVolumeUnitDropdown.setAdapter(volumeAdapter);
+    }
+
+    private void setupInputListeners() {
+        // Ingredient name input listener
+        binding.nameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setDraftName(charSequence.toString());
+            }
+        });
+
+        // RadioGroup checked listener
+        binding.radioGroup.setOnCheckedChangeListener( (group, checkedId) -> {
             IngredientMode mode = IngredientMode.MASS_ONLY;
 
-            if (binding.volumeButton.isChecked()) {
+            if (checkedId == binding.volumeButton.getId()) {
                 mode = IngredientMode.VOLUME_ONLY;
             }
-            else if (binding.massAndVolumeButton.isChecked()) {
+            else if (checkedId == binding.massAndVolumeButton.getId()) {
                 mode = IngredientMode.MASS_AND_VOLUME;
-                referenceMass = binding.massEditText.getText().toString();
-                //// massUnit data
-
-                referenceVolume = binding.volumeEditText.getText().toString();
-                //// volumeUnit data
             }
 
-            viewModel.setDraftName(name);
-            viewModel.setDraftMass(referenceMass);
-            viewModel.setDraftMassUnit(massUnit);
-            viewModel.setDraftVolume(referenceVolume);
-            viewModel.setDraftVolumeUnit(volumeUnit);
             viewModel.setDraftMode(mode);
+            updateModeUI(mode);
+        });
 
+        // Mass edit text listener
+        binding.massEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setDraftReferenceMass(charSequence.toString());
+            }
+        });
+
+        // Mass unit drop down listener
+        binding.referenceMassUnitDropdown.setOnItemClickListener(
+                (parent, view, position, id) -> {
+            viewModel.setDraftMassUnit(massUnits.get(position));
+        });
+
+        // Mass edit text listener
+        binding.massEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setDraftReferenceMass(charSequence.toString());
+            }
+        });
+
+        // Mass unit drop down listener
+        binding.referenceMassUnitDropdown.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    viewModel.setDraftMassUnit(massUnits.get(position));
+                }
+        );
+
+        // Volume edit text listener
+        binding.volumeEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setDraftReferenceVolume(charSequence.toString());
+            }
+        });
+
+        // Volume unit drop down listener
+        binding.referenceVolumeUnitDropdown.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    viewModel.setDraftVolumeUnit(volumeUnits.get(position));
+                }
+        );
+    }
+    private void saveButtonPressed() {
+        binding.saveIngredientButton.setOnClickListener(view -> {
             viewModel.saveIngredient();
+            Navigation.findNavController(view).popBackStack();
         });
     }
 }

@@ -18,7 +18,7 @@ import com.culinometry.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
-
+    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
     @Override
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
 
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+            appBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.recipe_list_fragment,
                     R.id.ingredient_list_fragment)
                     .build();
@@ -55,9 +55,13 @@ public class MainActivity extends AppCompatActivity {
                     binding.bottomNavigation.setVisibility(View.VISIBLE);
                 }
                 else {
-                    binding.bottomNavigation.setVisibility(View.INVISIBLE);
+                    binding.bottomNavigation.setVisibility(View.GONE);
                 }
             });
         }
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 }

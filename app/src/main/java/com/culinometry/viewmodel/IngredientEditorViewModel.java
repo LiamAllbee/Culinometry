@@ -12,7 +12,6 @@ import com.culinometry.repo.CulinometryRepository;
 
 public class IngredientEditorViewModel extends AndroidViewModel {
     private final CulinometryRepository repo;
-
     private long ingredientId = -1L;
 
     // Is the current state of an existing ingredient in the database. Only necessary if the
@@ -24,12 +23,20 @@ public class IngredientEditorViewModel extends AndroidViewModel {
     // If an existing ingredient initialized with the databaseIngredient data.
     private Ingredient ingredientDraft;
 
+    private boolean initialized = false;
+
     public IngredientEditorViewModel(Application application) {
         super(application);
         repo = CulinometryRepository.getInstance(application);
     }
 
     public void initializeIngredient(long ingredientId) {
+        // Forces initialization to only run once
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
         this.ingredientId = ingredientId;
 
         // If it is an existing ingredient initialize the databaseIngredient with existing data
@@ -98,7 +105,7 @@ public class IngredientEditorViewModel extends AndroidViewModel {
         ingredientDraft.setName(name);
     }
 
-    public void setDraftMass(String referenceMass) {
+    public void setDraftReferenceMass(String referenceMass) {
         ingredientDraft.setReferenceMass(referenceMass);
     }
 
@@ -106,7 +113,7 @@ public class IngredientEditorViewModel extends AndroidViewModel {
         ingredientDraft.setMassUnit(unit);
     }
 
-    public void setDraftVolume(String referenceVolume) {
+    public void setDraftReferenceVolume(String referenceVolume) {
         ingredientDraft.setReferenceVolume(referenceVolume);
     }
 

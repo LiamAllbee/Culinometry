@@ -1,5 +1,7 @@
 package com.culinometry.measurement;
 
+import androidx.annotation.NonNull;
+
 public enum Unit {
     // METRIC MASS
     GRAM(MeasurementType.MASS, "g"),
@@ -34,7 +36,9 @@ public enum Unit {
         return type;
     }
 
-    public String getDisplayName() {
+    @NonNull
+    @Override
+    public String toString() {
         return displayName;
     }
 }
