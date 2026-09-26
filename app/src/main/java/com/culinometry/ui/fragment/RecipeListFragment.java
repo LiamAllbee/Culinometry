@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -49,7 +48,7 @@ public class RecipeListFragment extends Fragment {
                 // simplifies the override into a shorthand. This isn't actually executed here but
                 // is just defining the behavior then handing it to the adapter to use.
                 NavDirections action = RecipeListFragmentDirections.actionToRecipeDetailFragment(recipe.getRecipeId());
-                Navigation.findNavController(view).navigate(action);
+                NavHostFragment.findNavController(this).navigate(action);
             };
 
             adapter = new RecipeAdapter(recipes, listener);
@@ -59,6 +58,9 @@ public class RecipeListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        binding.recipeRecyclerView.setAdapter(null);
+        adapter = null;
+
         super.onDestroyView();
         binding = null;
     }

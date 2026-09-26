@@ -7,251 +7,294 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_input_layout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/form_scroll_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Ingredient Name"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="104dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/radio_title_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Measurement Support"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name_input_layout" />
-
-    <TextView
-        android:id="@+id/radio_explanation_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose how this ingredient can be measured in recipes."
-        android:textSize="14sp"
-        android:paddingBottom="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:textColor="?android:attr/textColorSecondary"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_title_text_view" />
-
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="24dp"
-        app:layout_constraintTop_toBottomOf="@id/radio_explanation_text_view"
-        app:layout_constraintStart_toStartOf="parent">
-        <RadioButton
-            android:id="@+id/mass_button"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mass Only"/>
-        <RadioButton
-            android:id="@+id/volume_button"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Volume Only"/>
-        <RadioButton
-            android:id="@+id/mass_and_volume_button"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mass &amp; Volume"/>
-    </RadioGroup>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/conversion_card"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:visibility="gone"
-        app:cardCornerRadius="16dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:layout_height="wrap_content">
 
-            <!-- Title -->
-            <TextView
-                android:id="@+id/conversion_title_text_view"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_input_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Conversion Data"
+                android:hint="Ingredient Name"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/radio_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Measurement Support"
+                android:textStyle="bold"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name_input_layout" />
 
-            <!-- Explanation -->
             <TextView
-                android:id="@+id/conversion_explanation_text_view"
-                android:layout_width="0dp"
+                android:id="@+id/radio_explanation_text_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Enter mass and volume measurements to enable automatic conversion."
-                android:textColor="?android:attr/textColorSecondary"
+                android:text="Choose how this ingredient can be measured in recipes."
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/conversion_title_text_view" />
+                android:paddingBottom="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radio_title_text_view" />
 
-            <!-- MASS LABEL -->
-            <TextView
-                android:id="@+id/mass_label"
+            <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Mass"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/conversion_explanation_text_view" />
+                android:orientation="vertical"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toBottomOf="@id/radio_explanation_text_view"
+                app:layout_constraintStart_toStartOf="parent">
+                <RadioButton
+                    android:id="@+id/mass_button"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mass Only"/>
+                <RadioButton
+                    android:id="@+id/volume_button"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volume Only"/>
+                <RadioButton
+                    android:id="@+id/mass_and_volume_button"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mass &amp; Volume"/>
+            </RadioGroup>
 
-            <!-- MASS AMOUNT -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reference_mass_amount_layout"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/conversion_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:hint="Amount"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/reference_mass_unit_layout"
-                app:layout_constraintTop_toBottomOf="@id/mass_label"
-                app:layout_constraintHorizontal_weight="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mass_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:maxLength="29"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- MASS UNIT -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reference_mass_unit_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Unit"
-                app:layout_constraintStart_toEndOf="@id/reference_mass_amount_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/reference_mass_amount_layout"
-                app:layout_constraintBottom_toBottomOf="@id/reference_mass_amount_layout"
-                app:layout_constraintHorizontal_weight="1">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/reference_mass_unit_dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:maxLines="1" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- EQUALS SIGN -->
-            <TextView
-                android:id="@+id/conversion_equals_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="="
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:visibility="visible"
+                app:cardCornerRadius="16dp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/reference_mass_amount_layout" />
+                app:layout_constraintTop_toBottomOf="@id/radio_group">
 
-            <!-- VOLUME LABEL -->
-            <TextView
-                android:id="@+id/volume_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Volume"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/conversion_equals_text_view" />
-
-            <!-- VOLUME AMOUNT -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reference_volume_amount_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:hint="Amount"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/reference_volume_unit_layout"
-                app:layout_constraintTop_toBottomOf="@id/volume_label"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_weight="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/volume_edit_text"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:maxLength="29"/>
+                    android:padding="20dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <!-- Title -->
+                    <TextView
+                        android:id="@+id/conversion_title_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Conversion Data"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- VOLUME UNIT -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reference_volume_unit_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Unit"
-                app:layout_constraintStart_toEndOf="@id/reference_volume_amount_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/reference_volume_amount_layout"
-                app:layout_constraintBottom_toBottomOf="@id/reference_volume_amount_layout"
-                app:layout_constraintHorizontal_weight="1">
+                    <!-- Explanation -->
+                    <TextView
+                        android:id="@+id/conversion_explanation_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Enter mass and volume measurements to enable automatic conversion."
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/conversion_title_text_view" />
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/reference_volume_unit_dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:maxLines="1" />
+                    <!-- MASS LABEL -->
+                    <TextView
+                        android:id="@+id/mass_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Mass"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/conversion_explanation_text_view" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <!-- MASS AMOUNT -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reference_mass_amount_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Amount"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/reference_mass_unit_layout"
+                        app:layout_constraintTop_toBottomOf="@id/mass_label"
+                        app:layout_constraintHorizontal_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mass_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:maxLength="29"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- MASS UNIT -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reference_mass_unit_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Unit"
+                        app:layout_constraintStart_toEndOf="@id/reference_mass_amount_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/reference_mass_amount_layout"
+                        app:layout_constraintHorizontal_weight="1">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/reference_mass_unit_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:maxLines="1"
+                            android:dropDownHeight="240dp"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Barrier between Mass fields and equals sign -->
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/mass_row_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="reference_mass_amount_layout,reference_mass_unit_layout" />
+
+                    <!-- EQUALS SIGN -->
+                    <TextView
+                        android:id="@+id/conversion_equals_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="="
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/mass_row_barrier" />
+
+                    <!-- VOLUME LABEL -->
+                    <TextView
+                        android:id="@+id/volume_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Volume"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/conversion_equals_text_view" />
+
+                    <!-- VOLUME AMOUNT -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reference_volume_amount_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Amount"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/reference_volume_unit_layout"
+                        app:layout_constraintTop_toBottomOf="@id/volume_label"
+                        app:layout_constraintHorizontal_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/volume_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:maxLength="29"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- VOLUME UNIT -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reference_volume_unit_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Unit"
+                        app:layout_constraintStart_toEndOf="@id/reference_volume_amount_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/reference_volume_amount_layout"
+                        app:layout_constraintHorizontal_weight="1">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/reference_volume_unit_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:maxLines="1"
+                            android:dropDownHeight="240dp"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Barrier and spacer at the bottom of volume fields -->
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/volume_row_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="reference_volume_amount_layout,reference_volume_unit_layout" />
+
+                    <Space
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/volume_row_barrier"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save_ingredient_button"
@@ -259,7 +302,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/save_24"
         app:tint="@color/black"
         android:layout_margin="30dp"/>

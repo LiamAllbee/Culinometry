@@ -5,18 +5,12 @@ import java.util.regex.Pattern;
 
 public class QuantityParser {
     // Determine if input is mixed fraction "1 1/3"
-    // Must begin with digit(s), then space(s), then digit(s), then slash, then must end with digit(s)
-    //"^\\d+\\s+\\d+/\\d+$"
     private static final Pattern mixedFractionPattern = Pattern.compile("^\\d{1,9}\\s+\\d{1,9}/\\d{1,9}$");
 
     // Determine if input is regular fraction "1/3"
-    // Must begin with digits, then slash, then end with digits
-    //"^\\d+/\\d+$"
     private static final Pattern fractionPattern = Pattern.compile("^\\d{1,9}/\\d{1,9}$");
 
     // Determine if input is decimal / whole number
-    // Must begin with any amount of digits, must then follow a sequence of . followed by digit,
-    // but also . digit sequence part is optional at the end
     private static final Pattern decimalOrWholePattern = Pattern.compile("^\\d{1,9}(\\.\\d{1,9})?$");
 
     private QuantityParser() {}

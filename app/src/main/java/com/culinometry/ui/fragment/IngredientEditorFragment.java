@@ -141,24 +141,17 @@ public class IngredientEditorFragment extends Fragment {
                 return;
             }
 
-            if (binding.massButton.isChecked() || binding.volumeButton.isChecked()) {
-                binding.nameInputLayout.setError(state.getNameError());
+            binding.nameInputLayout.setError(state.getNameError());
 
-                binding.saveIngredientButton.setEnabled(state.isNameValid());
-            }
-            else {
-                binding.nameInputLayout.setError(state.getNameError());
+            // MASS ERRORS
+            binding.referenceMassAmountLayout.setError(state.getMassError());
+            binding.referenceMassUnitLayout.setError(state.getMassUnitError());
 
-                // MASS ERRORS
-                binding.referenceMassAmountLayout.setError(state.getMassError());
-                binding.referenceMassUnitLayout.setError(state.getMassUnitError());
+            // VOLUME ERRORS
+            binding.referenceVolumeAmountLayout.setError(state.getVolumeError());
+            binding.referenceVolumeUnitLayout.setError(state.getVolumeUnitError());
 
-                // VOLUME ERRORS
-                binding.referenceVolumeAmountLayout.setError(state.getVolumeError());
-                binding.referenceVolumeUnitLayout.setError(state.getVolumeUnitError());
-
-                binding.saveIngredientButton.setEnabled(state.isAllValid());
-            }
+            binding.saveIngredientButton.setEnabled(state.isAllValid());
         });
     }
 

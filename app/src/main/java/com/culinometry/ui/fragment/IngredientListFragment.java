@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -52,7 +51,7 @@ public class IngredientListFragment extends Fragment {
                         IngredientListFragmentDirections.actionToIngredientEditorFragment();
 
                 action.setIngredientId(ingredient.getIngredientId());
-                Navigation.findNavController(view).navigate(action);
+                NavHostFragment.findNavController(this).navigate(action);
             };
 
             adapter = new IngredientAdapter(ingredients, listener);
@@ -62,6 +61,9 @@ public class IngredientListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        binding.ingredientRecyclerView.setAdapter(null);
+        adapter = null;
+
         super.onDestroyView();
         binding = null;
     }

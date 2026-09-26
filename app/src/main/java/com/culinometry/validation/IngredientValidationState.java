@@ -1,6 +1,5 @@
 package com.culinometry.validation;
 
-import androidx.lifecycle.LiveData;
 
 public class IngredientValidationState {
     private final String nameError;
@@ -48,9 +47,5 @@ public class IngredientValidationState {
                 && massUnitError == null
                 && volumeError == null
                 && volumeUnitError == null;
-    }
-
-    public boolean isNameValid() {
-        return nameError == null;
     }
 }
