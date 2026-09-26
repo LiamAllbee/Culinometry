@@ -4,11 +4,18 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.culinometry.measurement.IngredientMode;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.Ingredient;
 import com.culinometry.repo.CulinometryRepository;
+import com.culinometry.validation.IngredientValidationState;
+import com.culinometry.validation.IngredientValidator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IngredientEditorViewModel extends AndroidViewModel {
     private final CulinometryRepository repo;
@@ -25,9 +32,28 @@ public class IngredientEditorViewModel extends AndroidViewModel {
 
     private boolean initialized = false;
 
+    // The MediatorLiveData wrapper that when initialized with a validationState.setValue() gets
+    // observed. Mediator because we are reliant on two live data the list of ingredients and the
+    // validation state
+    private final MediatorLiveData<IngredientValidationState> validationState = new MediatorLiveData<>();
+
+    private List<Ingredient> existingIngredients = new ArrayList<>();
+
     public IngredientEditorViewModel(Application application) {
         super(application);
         repo = CulinometryRepository.getInstance(application);
+
+        // When viewModel is created in fragment sync creation with list of ingredients being
+        // gathered. Also, if database ever changes sync existingIngredients and then
+        // validateIngredients again
+        validationState.addSource(repo.getAllIngredients(), ingredients -> {
+            if (ingredients != null) {
+                existingIngredients = ingredients;
+            }
+            if (ingredientDraft != null) {
+                validateIngredient();
+            }
+        });
     }
 
     public void initializeIngredient(long ingredientId) {
@@ -39,7 +65,9 @@ public class IngredientEditorViewModel extends AndroidViewModel {
         initialized = true;
         this.ingredientId = ingredientId;
 
-        // If it is an existing ingredient initialize the databaseIngredient with existing data
+        // If it is an existing ingredient initialize the databaseIngredient with existing data at
+        // the time of ingredient create or edit being accessed. Technically not fully up to date
+        // if the DB side list changes mid-access but that should never happen.
         if (ingredientId != -1L) {
             databaseIngredient = repo.getIngredient(ingredientId);
         }
@@ -103,29 +131,45 @@ public class IngredientEditorViewModel extends AndroidViewModel {
 
     public void setDraftName(String name) {
         ingredientDraft.setName(name);
+        validateIngredient();
     }
 
     public void setDraftReferenceMass(String referenceMass) {
         ingredientDraft.setReferenceMass(referenceMass);
+        validateIngredient();
     }
 
     public void setDraftMassUnit(Unit unit) {
         ingredientDraft.setMassUnit(unit);
+        validateIngredient();
     }
 
     public void setDraftReferenceVolume(String referenceVolume) {
         ingredientDraft.setReferenceVolume(referenceVolume);
+        validateIngredient();
     }
 
     public void setDraftVolumeUnit(Unit unit) {
         ingredientDraft.setVolumeUnit(unit);
+        validateIngredient();
     }
 
     public void setDraftMode(IngredientMode mode) {
         ingredientDraft.setMode(mode);
+        validateIngredient();
     }
 
     public void setSoftDeleted(boolean softDeleted) {
         repo.setSoftDeleted(ingredientDraft.getIngredientId(), softDeleted);
+    }
+
+    public LiveData<IngredientValidationState> getValidationState() {
+        return validationState;
+    }
+
+    private void validateIngredient() {
+        IngredientValidationState newState = IngredientValidator.validate(ingredientDraft, existingIngredients);
+
+        validationState.setValue(newState);
     }
 }

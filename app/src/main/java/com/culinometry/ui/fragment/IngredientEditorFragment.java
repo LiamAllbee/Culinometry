@@ -62,6 +62,7 @@ public class IngredientEditorFragment extends Fragment {
         // Stores the current ingredient into the view models memory
         viewModel.initializeIngredient(ingredientId);
 
+        observeValidationState();
         setupUnitDropdowns();
         setupInputListeners();
 
@@ -129,6 +130,35 @@ public class IngredientEditorFragment extends Fragment {
             viewModel.syncIngredientDraft(ingredient);
 
             populateUIFields(viewModel.getIngredientDraft());
+        });
+    }
+
+    private void observeValidationState() {
+        viewModel.getValidationState().observe(getViewLifecycleOwner(), state -> {
+            // State is null if user hasn't entered anything yet
+            if (state == null) {
+                binding.saveIngredientButton.setEnabled(false);
+                return;
+            }
+
+            if (binding.massButton.isChecked() || binding.volumeButton.isChecked()) {
+                binding.nameInputLayout.setError(state.getNameError());
+
+                binding.saveIngredientButton.setEnabled(state.isNameValid());
+            }
+            else {
+                binding.nameInputLayout.setError(state.getNameError());
+
+                // MASS ERRORS
+                binding.referenceMassAmountLayout.setError(state.getMassError());
+                binding.referenceMassUnitLayout.setError(state.getMassUnitError());
+
+                // VOLUME ERRORS
+                binding.referenceVolumeAmountLayout.setError(state.getVolumeError());
+                binding.referenceVolumeUnitLayout.setError(state.getVolumeUnitError());
+
+                binding.saveIngredientButton.setEnabled(state.isAllValid());
+            }
         });
     }
 
@@ -223,7 +253,7 @@ public class IngredientEditorFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.setDraftName(charSequence.toString());
+                viewModel.setDraftName(charSequence.toString().strip());
             }
         });
 
@@ -256,7 +286,7 @@ public class IngredientEditorFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.setDraftReferenceMass(charSequence.toString());
+                viewModel.setDraftReferenceMass(charSequence.toString().strip());
             }
         });
 
@@ -280,7 +310,7 @@ public class IngredientEditorFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewModel.setDraftReferenceVolume(charSequence.toString());
+                viewModel.setDraftReferenceVolume(charSequence.toString().strip());
             }
         });
 
