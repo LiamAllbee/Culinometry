@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Ingredient name input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_input_layout"
                 android:layout_width="0dp"
@@ -33,7 +34,9 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:helperTextEnabled="true"
+                app:helperText=" ">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name_edit_text"
@@ -42,6 +45,8 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!-- Measurement title -->
             <TextView
                 android:id="@+id/radio_title_text_view"
                 android:layout_width="wrap_content"
@@ -55,6 +60,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_input_layout" />
 
+            <!-- Measurement subtext -->
             <TextView
                 android:id="@+id/radio_explanation_text_view"
                 android:layout_width="wrap_content"
@@ -68,6 +74,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/radio_title_text_view" />
 
+            <!-- Beginning of Radio Group -->
             <RadioGroup
                 android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
@@ -96,6 +103,8 @@
                     android:text="Mass &amp; Volume"/>
             </RadioGroup>
 
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Beginning of Conversion Section-->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/conversion_card"
                 android:layout_width="0dp"
@@ -162,7 +171,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/reference_mass_unit_layout"
                         app:layout_constraintTop_toBottomOf="@id/mass_label"
-                        app:layout_constraintHorizontal_weight="1">
+                        app:layout_constraintHorizontal_weight="1"
+                        app:helperTextEnabled="true"
+                        app:helperText=" ">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/mass_edit_text"
@@ -208,7 +219,6 @@
                         android:id="@+id/conversion_equals_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:text="="
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -221,7 +231,6 @@
                         android:id="@+id/volume_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:text="Volume"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -239,7 +248,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/reference_volume_unit_layout"
                         app:layout_constraintTop_toBottomOf="@id/volume_label"
-                        app:layout_constraintHorizontal_weight="1">
+                        app:layout_constraintHorizontal_weight="1"
+                        app:helperTextEnabled="true"
+                        app:helperText=" ">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/volume_edit_text"
@@ -260,7 +271,9 @@
                         app:layout_constraintStart_toEndOf="@id/reference_volume_amount_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/reference_volume_amount_layout"
-                        app:layout_constraintHorizontal_weight="1">
+                        app:layout_constraintHorizontal_weight="1"
+                        app:helperTextEnabled="true"
+                        app:helperText=" ">
 
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/reference_volume_unit_dropdown"
@@ -271,22 +284,6 @@
                             android:dropDownHeight="240dp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Barrier and spacer at the bottom of volume fields -->
-                    <androidx.constraintlayout.widget.Barrier
-                        android:id="@+id/volume_row_barrier"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:barrierDirection="bottom"
-                        app:constraint_referenced_ids="reference_volume_amount_layout,reference_volume_unit_layout" />
-
-                    <Space
-                        android:layout_width="1dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@id/volume_row_barrier"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

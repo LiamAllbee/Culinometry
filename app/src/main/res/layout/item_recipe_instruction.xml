@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_instruction_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="16dp"
+    android:layout_marginBottom="8dp"
+    card_view:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Instruction step  -->
+        <TextView
+            android:id="@+id/instruction_step"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/step_text"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@id/delete_button"
+            card_view:layout_constraintTop_toTopOf="@id/delete_button"
+            card_view:layout_constraintBottom_toBottomOf="@id/delete_button">
+
+        </TextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialIconButtonFilledStyle"
+            android:contentDescription="@string/delete_instruction"
+            card_view:icon="@drawable/delete_24"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            />
+
+        <!-- Top barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/top_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:barrierDirection="bottom"
+            card_view:constraint_referenced_ids="instruction_step,delete_button" />
+
+
+        <!-- Reduce heat to medium-low and simmer until the sauce thickens enough to coat the back of a spoon -->
+        <!-- Instruction input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/instruction_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/instruction_title"
+            android:layout_marginTop="8dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/top_barrier"
+            card_view:helperTextEnabled="true"
+            card_view:helperText=" "
+            card_view:counterEnabled="true"
+            card_view:counterMaxLength="256">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/instruction_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="2"
+                android:gravity="top|start"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLength="256"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

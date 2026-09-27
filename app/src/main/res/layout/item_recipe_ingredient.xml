@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recipe_ingredient_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="16dp"
+    android:layout_marginBottom="8dp"
+    card_view:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Ingredient input / drop down -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ingredient_input_layout"
+            android:layout_width="0dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/ingredient_title"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@id/delete_button"
+            card_view:helperTextEnabled="true"
+            card_view:helperText=" ">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/ingredient_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Delete ingredient button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            style="?attr/materialIconButtonFilledStyle"
+            android:contentDescription="@string/delete_ingredient"
+            card_view:icon="@drawable/delete_24"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="@id/ingredient_input_layout"/>
+
+        <!-- Ingredient quantity input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ingredient_quantity_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/amount_title"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@id/ingredient_unit_layout"
+            card_view:layout_constraintTop_toBottomOf="@id/ingredient_input_layout"
+            card_view:layout_constraintHorizontal_weight="1"
+            card_view:helperTextEnabled="true"
+            card_view:helperText=" "
+            android:enabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ingredient_quantity_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:maxLength="29"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Ingredient unit -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ingredient_unit_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/unit_title"
+            card_view:layout_constraintStart_toEndOf="@id/ingredient_quantity_layout"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="@id/ingredient_quantity_layout"
+            card_view:layout_constraintHorizontal_weight="1"
+            card_view:helperTextEnabled="true"
+            card_view:helperText=" "
+            android:enabled="false">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/unit_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:maxLines="1"
+                android:dropDownHeight="240dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Bottom barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:barrierDirection="bottom"
+            card_view:constraint_referenced_ids="ingredient_quantity_layout,ingredient_unit_layout" />
+
+        <!-- unitLocked check box -->
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/unit_locked_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintTop_toBottomOf="@id/bottom_barrier"
+            android:text="@string/disable_conversion_for_this_ingredient"
+            android:textSize="16sp"
+            android:enabled="false"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

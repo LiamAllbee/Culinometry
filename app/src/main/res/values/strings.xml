@@ -5,4 +5,12 @@
     <string name="ingredients">Ingredients</string>
     <string name="recipes">Recipes</string>
     <string name="add">add</string>
+    <string name="ingredient_title">Ingredient</string>
+    <string name="amount_title">Amount</string>
+    <string name="unit_title">Unit</string>
+    <string name="disable_conversion_for_this_ingredient">Disable conversion for this ingredient</string>
+    <string name="delete_ingredient">Delete Ingredient</string>
+    <string name="step_text">Step 1:</string>
+    <string name="delete_instruction">Delete Instruction</string>
+    <string name="instruction_title">Instruction</string>
 </resources>
