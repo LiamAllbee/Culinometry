@@ -10,7 +10,7 @@
     <string name="unit_title">Unit</string>
     <string name="disable_conversion_for_this_ingredient">Disable conversion for this ingredient</string>
     <string name="delete_ingredient">Delete Ingredient</string>
-    <string name="step_text">Step 1:</string>
+    <string name="step_text">Step </string>
     <string name="delete_instruction">Delete Instruction</string>
     <string name="instruction_title">Instruction</string>
 </resources>
