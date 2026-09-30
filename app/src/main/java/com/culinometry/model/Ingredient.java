@@ -127,4 +127,10 @@ public class Ingredient {
     public void setIsSoftDeleted(boolean isSoftDeleted) {
         this.isSoftDeleted = isSoftDeleted;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
+    }
 }

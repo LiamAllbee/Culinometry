@@ -99,7 +99,7 @@
             <!-- Add RecipeIngredient button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_ingredient_button"
-                style="?attr/materialButtonElevatedStyle"
+                style="?attr/materialButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"

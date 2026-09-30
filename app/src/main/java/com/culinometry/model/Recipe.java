@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -35,6 +36,14 @@ public class Recipe {
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    @Ignore
+    public Recipe(
+            @NonNull String name,
+            @Nullable String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public long getRecipeId() {
