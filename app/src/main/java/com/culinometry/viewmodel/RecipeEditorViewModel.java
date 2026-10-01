@@ -55,10 +55,6 @@ public class RecipeEditorViewModel extends AndroidViewModel {
                 });
     }
 
-    public LiveData<RecipeEditorDraft> getEditorDraft() {
-        return editorDraft;
-    }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
     // Recipe Draft methods
     public void setRecipeName(String name) {
@@ -443,6 +439,10 @@ public class RecipeEditorViewModel extends AndroidViewModel {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
     // Misc functionality methods
+
+    public LiveData<RecipeEditorDraft> getEditorDraft() {
+        return editorDraft;
+    }
 
     public void initializeRecipe(long recipeId) {
         if (initialized) {
