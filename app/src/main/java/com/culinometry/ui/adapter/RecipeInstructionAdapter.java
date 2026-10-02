@@ -11,12 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.culinometry.databinding.ItemRecipeInstructionBinding;
 
+import com.culinometry.model.RecipeIngredientDraft;
 import com.culinometry.model.RecipeInstruction;
 import com.culinometry.model.RecipeInstructionDraft;
+import com.culinometry.validation.RecipeIngredientValidationState;
 
 import org.jspecify.annotations.NonNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecipeInstructionAdapter extends ListAdapter<RecipeInstructionDraft, RecipeInstructionAdapter.RecipeInstructionHolder> {
 
@@ -55,6 +59,8 @@ public class RecipeInstructionAdapter extends ListAdapter<RecipeInstructionDraft
     private final OnInstructionActionListener listener;
     private static final Object CHANGED_ROW = new Object();
     private static final Object INSTRUCTION_CHANGED = new Object();
+    private static final Object VALIDATION_CHANGED = new Object();
+    private Map<Long, String> validationErrors = new HashMap<>();
 
     public RecipeInstructionAdapter(OnInstructionActionListener listener) {
         super(DIFF_CALLBACK);
@@ -76,7 +82,12 @@ public class RecipeInstructionAdapter extends ListAdapter<RecipeInstructionDraft
     // Binds the current item
     @Override
     public void onBindViewHolder(@NonNull RecipeInstructionHolder holder, int position) {
-        holder.bind(getItem(position), position);
+        RecipeInstructionDraft draft = getItem(position);
+
+        holder.bind(draft, position);
+
+        // Calls the validation state for each row and binds the errors to each row
+        holder.bindValidation(validationErrors.get(draft.getDraftId()));
     }
 
     // Uses payload to perform a partial update and refresh the instruction numbers
@@ -90,6 +101,11 @@ public class RecipeInstructionAdapter extends ListAdapter<RecipeInstructionDraft
         // If payload contains INSTRUCTION_CHANGED don't bind while user is typing
         if (payload.contains(INSTRUCTION_CHANGED)) {
             holder.bindInstructionState(getItem(position));
+        }
+
+        if (payload.contains(VALIDATION_CHANGED)) {
+            RecipeInstructionDraft draft = getItem(position);
+            holder.bindValidation(validationErrors.get(draft.getDraftId()));
         }
 
         if (payload.isEmpty()) {
@@ -129,6 +145,25 @@ public class RecipeInstructionAdapter extends ListAdapter<RecipeInstructionDraft
         return false;
     }
 
+    // Is used for calling the setting of errors from the fragment. Is called regardless of if there
+    // is or isn't errors
+    public void setValidationErrors(Map<Long, String> validationErrors) {
+        this.validationErrors = new HashMap<>(validationErrors);
+
+        notifyItemRangeChanged(
+                0,
+                getItemCount(),
+                VALIDATION_CHANGED
+        );
+    }
+
+
+
+
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+    // Beginning of holder class
     public static class RecipeInstructionHolder extends RecyclerView.ViewHolder {
 
         private RecipeInstructionDraft currentDraft;
@@ -211,6 +246,10 @@ public class RecipeInstructionAdapter extends ListAdapter<RecipeInstructionDraft
                     isBinding = false;
                 }
             }
+        }
+
+        public void bindValidation(String error) {
+            binding.instructionInputLayout.setError(error);
         }
     }
 }

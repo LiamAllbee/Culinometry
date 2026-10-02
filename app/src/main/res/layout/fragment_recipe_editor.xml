@@ -36,7 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:helperTextEnabled="true"
-                app:helperText="TEst">
+                app:helperText=" ">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name_edit_text"
@@ -58,7 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_input_layout"
                 app:helperTextEnabled="true"
-                app:helperText="Test">
+                app:helperText=" ">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/description_edit_text"

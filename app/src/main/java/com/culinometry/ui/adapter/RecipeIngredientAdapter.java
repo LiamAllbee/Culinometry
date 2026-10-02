@@ -18,9 +18,12 @@ import com.culinometry.measurement.Unit;
 import com.culinometry.model.Ingredient;
 import com.culinometry.model.RecipeIngredientDraft;
 import com.culinometry.model.RecipeInstructionDraft;
+import com.culinometry.validation.RecipeIngredientValidationState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class RecipeIngredientAdapter extends ListAdapter<RecipeIngredientDraft, RecipeIngredientAdapter.RecipeIngredientHolder> {
@@ -78,7 +81,9 @@ public class RecipeIngredientAdapter extends ListAdapter<RecipeIngredientDraft, 
     private final OnRecipeIngredientActionListener listener;
     private static final Object ROW_STATE_CHANGED = new Object();
     private static final Object INGREDIENT_CATALOG_CHANGED = new Object();
+    private static final Object VALIDATION_CHANGED = new Object();
     private List<Ingredient> ingredientCatalog = new ArrayList<>();
+    private Map<Long, RecipeIngredientValidationState> validationErrors = new HashMap<>();
 
     public RecipeIngredientAdapter(OnRecipeIngredientActionListener listener) {
         super(DIFF_CALLBACK);
@@ -100,8 +105,13 @@ public class RecipeIngredientAdapter extends ListAdapter<RecipeIngredientDraft, 
     // Binds the current item
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientHolder holder, int position) {
+        RecipeIngredientDraft draft = getItem(position);
+
         holder.bindIngredientCatalog(ingredientCatalog);
-        holder.bind(getItem(position), position);
+        holder.bind(draft, position);
+
+        // Calls the validation state for each row and binds the errors to each row
+        holder.bindValidation(validationErrors.get(draft.getDraftId()));
     }
 
     // Uses payload to perform prevent rebinding while user is editing
@@ -112,6 +122,10 @@ public class RecipeIngredientAdapter extends ListAdapter<RecipeIngredientDraft, 
             return;
         }
 
+        if (payload.contains(VALIDATION_CHANGED)) {
+            RecipeIngredientDraft draft = getItem(position);
+            holder.bindValidation(validationErrors.get(draft.getDraftId()));
+        }
         if (payload.contains(INGREDIENT_CATALOG_CHANGED)) {
             holder.bindIngredientCatalog(ingredientCatalog);
         }
@@ -165,6 +179,17 @@ public class RecipeIngredientAdapter extends ListAdapter<RecipeIngredientDraft, 
         );
     }
 
+    // Is used for calling the setting of errors from the fragment. Is called regardless of if there
+    // is or isn't errors
+    public void setValidationErrors(Map<Long, RecipeIngredientValidationState> validationErrors) {
+        this.validationErrors = new HashMap<>(validationErrors);
+
+        notifyItemRangeChanged(
+                0,
+                getItemCount(),
+                VALIDATION_CHANGED
+        );
+    }
 
 
 
@@ -456,6 +481,19 @@ public class RecipeIngredientAdapter extends ListAdapter<RecipeIngredientDraft, 
             ingredientDropDownAdapter.clear();
             ingredientDropDownAdapter.addAll(ingredients);
             ingredientDropDownAdapter.notifyDataSetChanged();
+        }
+
+        public void bindValidation(RecipeIngredientValidationState state) {
+            if (state == null) {
+                binding.ingredientInputLayout.setError(null);
+                binding.ingredientQuantityLayout.setError(null);
+                binding.ingredientUnitLayout.setError(null);
+            }
+            else {
+                binding.ingredientInputLayout.setError(state.getIngredientError());
+                binding.ingredientQuantityLayout.setError(state.getQuantityError());
+                binding.ingredientUnitLayout.setError(state.getUnitError());
+            }
         }
     }
 }

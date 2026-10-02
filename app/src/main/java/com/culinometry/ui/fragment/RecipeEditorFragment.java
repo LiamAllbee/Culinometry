@@ -59,6 +59,7 @@ public class RecipeEditorFragment extends Fragment {
 
         observeEditorDraft();
         observeIngredientCatalog();
+        observeValidationState();
 
         // Stores the current recipeId into the view models memory
         viewModel.initializeRecipe(recipeId);
@@ -200,6 +201,26 @@ public class RecipeEditorFragment extends Fragment {
                     if (ingredients != null) {
                         ingredientAdapter.setIngredientCatalog(ingredients);
                     }
+                }
+        );
+    }
+
+    private void observeValidationState() {
+        viewModel.getValidationState().observe(
+                getViewLifecycleOwner(), state -> {
+                    // Explicitly don't allow the save button until isAllValid proves otherwise.
+                    if (state == null) {
+                        binding.saveRecipeButton.setEnabled(false);
+                        return;
+                    }
+
+                    binding.nameInputLayout.setError(state.getNameError());
+
+                    ingredientAdapter.setValidationErrors(state.getRecipeIngredientErrors());
+                    instructionAdapter.setValidationErrors(state.getRecipeInstructionErrors());
+
+                    binding.saveRecipeButton.setEnabled(state.isAllValid());
+
                 }
         );
     }

@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.culinometry.measurement.IngredientMode;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.Ingredient;
 import com.culinometry.model.Recipe;
@@ -19,6 +18,8 @@ import com.culinometry.model.RecipeIngredientWithIngredient;
 import com.culinometry.model.RecipeInstruction;
 import com.culinometry.model.RecipeInstructionDraft;
 import com.culinometry.repo.CulinometryRepository;
+import com.culinometry.validation.RecipeValidationState;
+import com.culinometry.validation.RecipeValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class RecipeEditorViewModel extends AndroidViewModel {
     private List<Ingredient> ingredientCatalog = new ArrayList<>();
 
     private final MediatorLiveData<List<Ingredient>> ingredientCatalogLiveData = new MediatorLiveData<>();
+    private final MediatorLiveData<RecipeValidationState> validationState = new MediatorLiveData<>();
 
     public RecipeEditorViewModel(Application application) {
         super(application);
@@ -53,6 +55,14 @@ public class RecipeEditorViewModel extends AndroidViewModel {
 
                     ingredientCatalogLiveData.setValue(ingredientCatalog);
                 });
+
+        validationState.addSource(
+                editorDraft, draft -> {
+                    if (draft != null) {
+                        validationState.setValue(RecipeValidator.validate(draft));
+                    }
+                }
+        );
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
@@ -481,21 +491,6 @@ public class RecipeEditorViewModel extends AndroidViewModel {
         List<RecipeIngredientDraft> recipeIngredientDrafts = currentEditorDraft.getRecipeIngredientDrafts();
         List<RecipeInstructionDraft> recipeInstructionDrafts = currentEditorDraft.getRecipeInstructionDrafts();
 
-        if (recipeDraft.getName().isBlank()) {
-            return;
-        }
-        for (RecipeIngredientDraft draft : recipeIngredientDrafts) {
-            if (draft.getIngredient() == null || draft.getIngredientInput().isBlank() || draft.getQuantity().isBlank() || draft.getUnit() == null) {
-                return;
-            }
-        }
-
-        for (RecipeInstructionDraft draft : recipeInstructionDrafts) {
-            if (draft.getInstruction().isBlank()) {
-                return;
-            }
-        }
-
         if(isNewRecipe()) {
             Recipe recipe = new Recipe(recipeDraft.getName(), recipeDraft.getDescription());
 
@@ -532,6 +527,9 @@ public class RecipeEditorViewModel extends AndroidViewModel {
         }
     }
 
+    public LiveData<RecipeValidationState> getValidationState() {
+        return validationState;
+    }
 
 
 
