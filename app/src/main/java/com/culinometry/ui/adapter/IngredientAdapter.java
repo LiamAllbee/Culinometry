@@ -3,6 +3,8 @@ package com.culinometry.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.culinometry.databinding.ItemIngredientBinding;
@@ -10,18 +12,30 @@ import com.culinometry.model.Ingredient;
 
 import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientHolder> {
+public class IngredientAdapter extends ListAdapter<Ingredient, IngredientAdapter.IngredientHolder> {
 
     public interface OnIngredientClickListener {
         void onIngredientClick(Ingredient ingredient);
     }
-    private final List<Ingredient> ingredientList;
     private final OnIngredientClickListener listener;
 
-    public IngredientAdapter(List<Ingredient> ingredientList, OnIngredientClickListener listener) {
-        this.ingredientList = ingredientList;
+    private static final DiffUtil.ItemCallback<Ingredient> DIFF_CALLBACK = new DiffUtil.ItemCallback<Ingredient>() {
+        @Override
+        public boolean areItemsTheSame(@androidx.annotation.NonNull Ingredient oldItem, @androidx.annotation.NonNull Ingredient newItem) {
+            return oldItem.getIngredientId() == newItem.getIngredientId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@androidx.annotation.NonNull Ingredient oldItem, @androidx.annotation.NonNull Ingredient newItem) {
+            return oldItem.getName().equals(newItem.getName());
+        }
+    };
+
+    public IngredientAdapter(OnIngredientClickListener listener) {
+        super(DIFF_CALLBACK);
         this.listener = listener;
     }
 
@@ -38,13 +52,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public void onBindViewHolder(@NonNull IngredientHolder holder, int position) {
-        holder.bind(ingredientList.get(position));
+        holder.bind(getItem(position));
     }
 
-    @Override
-    public int getItemCount() {
-        return ingredientList.size();
-    }
+
+
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+    // Beginning of IngredientHolder
 
     public static class IngredientHolder extends RecyclerView.ViewHolder {
 

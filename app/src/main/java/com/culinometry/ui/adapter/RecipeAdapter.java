@@ -3,6 +3,8 @@ package com.culinometry.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.culinometry.databinding.ItemRecipeBinding;
@@ -12,16 +14,28 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHolder> {
+public class RecipeAdapter extends ListAdapter<Recipe, RecipeAdapter.RecipeHolder> {
 
     public interface OnRecipeClickListener {
         void onRecipeClick(Recipe recipe);
     }
-    private final List<Recipe> recipeList;
+
     private final OnRecipeClickListener listener;
 
-    public RecipeAdapter(List<Recipe> recipeList, OnRecipeClickListener listener) {
-        this.recipeList = recipeList;
+    public static final DiffUtil.ItemCallback<Recipe> DIFF_CALLBACK = new DiffUtil.ItemCallback<Recipe>() {
+        @Override
+        public boolean areItemsTheSame(@androidx.annotation.NonNull Recipe oldItem, @androidx.annotation.NonNull Recipe newItem) {
+            return oldItem.getRecipeId() == newItem.getRecipeId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@androidx.annotation.NonNull Recipe oldItem, @androidx.annotation.NonNull Recipe newItem) {
+            return oldItem.getName().equals(newItem.getName());
+        }
+    };
+
+    public RecipeAdapter(OnRecipeClickListener listener) {
+        super(DIFF_CALLBACK);
         this.listener = listener;
     }
 
@@ -38,13 +52,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
     @Override
     public void onBindViewHolder(@NonNull RecipeHolder holder, int position) {
-        holder.bind(recipeList.get(position));
+        holder.bind(getItem(position));
     }
 
-    @Override
-    public int getItemCount() {
-        return recipeList.size();
-    }
+
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+    // Beginning of RecipeHolder
 
     public static class RecipeHolder extends RecyclerView.ViewHolder {
 

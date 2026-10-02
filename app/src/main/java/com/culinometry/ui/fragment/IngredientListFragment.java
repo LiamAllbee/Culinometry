@@ -1,6 +1,8 @@
 package com.culinometry.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,20 +44,39 @@ public class IngredientListFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(action);
         });
 
-        viewModel.getAllIngredients().observe(getViewLifecycleOwner(), ingredients -> {
-            IngredientAdapter.OnIngredientClickListener listener = ingredient -> {
-                // This is the implementation of the onIngredientClick() using safe args. The Lambda
-                // simplifies the override into a shorthand. This isn't actually executed here but
-                // is just defining the behavior then handing it to the adapter to use.
-                IngredientListFragmentDirections.ActionToIngredientEditorFragment action =
-                        IngredientListFragmentDirections.actionToIngredientEditorFragment();
+        binding.searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.setSearchQuery(editable.toString());
+            }
 
-                action.setIngredientId(ingredient.getIngredientId());
-                NavHostFragment.findNavController(this).navigate(action);
-            };
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            adapter = new IngredientAdapter(ingredients, listener);
-            binding.ingredientRecyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+
+        IngredientAdapter.OnIngredientClickListener listener = ingredient -> {
+            // This is the implementation of the onIngredientClick() using safe args. The Lambda
+            // simplifies the override into a shorthand. This isn't actually executed here but
+            // is just defining the behavior then handing it to the adapter to use.
+            IngredientListFragmentDirections.ActionToIngredientEditorFragment action =
+                    IngredientListFragmentDirections.actionToIngredientEditorFragment();
+
+            action.setIngredientId(ingredient.getIngredientId());
+            NavHostFragment.findNavController(this).navigate(action);
+        };
+
+        adapter = new IngredientAdapter(listener);
+        binding.ingredientRecyclerView.setAdapter(adapter);
+
+        viewModel.getFilteredIngredients().observe(getViewLifecycleOwner(), ingredients -> {
+            adapter.submitList(ingredients);
         });
     }
 

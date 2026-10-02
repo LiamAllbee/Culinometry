@@ -1,6 +1,8 @@
 package com.culinometry.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,17 +44,36 @@ public class RecipeListFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(action);
         });
 
-        viewModel.getAllRecipes().observe(getViewLifecycleOwner(), recipes -> {
-            RecipeAdapter.OnRecipeClickListener listener = recipe -> {
-                // This is the implementation of the onRecipeClick() using safe args. The Lambda
-                // simplifies the override into a shorthand. This isn't actually executed here but
-                // is just defining the behavior then handing it to the adapter to use.
-                NavDirections action = RecipeListFragmentDirections.actionToRecipeDetailFragment(recipe.getRecipeId());
-                NavHostFragment.findNavController(this).navigate(action);
-            };
+        binding.searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.setSearchQuery(editable.toString());
+            }
 
-            adapter = new RecipeAdapter(recipes, listener);
-            binding.recipeRecyclerView.setAdapter(adapter);
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+
+        RecipeAdapter.OnRecipeClickListener listener = recipe -> {
+            // This is the implementation of the onRecipeClick() using safe args. The Lambda
+            // simplifies the override into a shorthand. This isn't actually executed here but
+            // is just defining the behavior then handing it to the adapter to use.
+            NavDirections action = RecipeListFragmentDirections.actionToRecipeDetailFragment(recipe.getRecipeId());
+            NavHostFragment.findNavController(this).navigate(action);
+        };
+
+        adapter = new RecipeAdapter(listener);
+        binding.recipeRecyclerView.setAdapter(adapter);
+
+        viewModel.getFilteredRecipes().observe(getViewLifecycleOwner(), recipes -> {
+            adapter.submitList(recipes);
         });
     }
 
