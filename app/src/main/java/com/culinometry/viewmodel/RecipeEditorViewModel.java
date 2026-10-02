@@ -27,7 +27,11 @@ import java.util.List;
 public class RecipeEditorViewModel extends AndroidViewModel {
     private final CulinometryRepository repo;
 
-    private final MutableLiveData<RecipeEditorDraft> editorDraft = new MutableLiveData<>();
+    private final MediatorLiveData<RecipeEditorDraft> editorDraft = new MediatorLiveData<>();
+    private Recipe loadedRecipe;
+    private List<RecipeIngredientWithIngredient> loadedRIWIList;
+    private List<RecipeInstruction> loadedInstructionList;
+    private boolean existingRecipeSynced = false;
 
     private long nextInstructionDraftId = 1L;
     private long nextIngredientDraftId = 1L;
@@ -463,7 +467,25 @@ public class RecipeEditorViewModel extends AndroidViewModel {
         this.recipeId = recipeId;
 
         if (recipeId != -1L) {
-            // Initialize existing recipe
+            LiveData<Recipe> recipeLiveData = repo.getRecipe(recipeId);
+            LiveData<List<RecipeIngredientWithIngredient>> recipeIngredientListWithIngredientLiveData = repo.getAllIngredientsForRecipe(recipeId);
+            LiveData<List<RecipeInstruction>> recipeInstructionListLiveData = repo.getAllRecipeInstructionsForRecipe(recipeId);
+
+            editorDraft.addSource(recipeLiveData, recipe -> {
+                loadedRecipe = recipe;
+                tryInitializeExistingRecipe();
+            });
+
+            editorDraft.addSource(recipeIngredientListWithIngredientLiveData, recipeIngredientWithIngredients -> {
+                loadedRIWIList = recipeIngredientWithIngredients;
+                tryInitializeExistingRecipe();
+            });
+
+            editorDraft.addSource(recipeInstructionListLiveData, recipeInstructions -> {
+                loadedInstructionList = recipeInstructions;
+                tryInitializeExistingRecipe();
+            });
+
         }
         else {
             RecipeDraft recipeDraft = new RecipeDraft("", "");
@@ -475,6 +497,57 @@ public class RecipeEditorViewModel extends AndroidViewModel {
             editorDraft.setValue(newRecipeEditorDraft);
         }
 
+    }
+
+    private void tryInitializeExistingRecipe() {
+        if (existingRecipeSynced) {
+            return;
+        }
+
+        if (loadedRecipe == null || loadedRIWIList == null || loadedInstructionList == null) {
+            return;
+        }
+
+        RecipeDraft recipeDraft = new RecipeDraft(
+                loadedRecipe.getName(),
+                loadedRecipe.getDescription() == null ? "" : loadedRecipe.getDescription());
+
+        List<RecipeIngredientDraft> recipeIngredientDraftList = new ArrayList<>();
+
+        // Initialize list of recipeIngredientDrafts
+        for (RecipeIngredientWithIngredient rIWI : loadedRIWIList) {
+            RecipeIngredientDraft draft = new RecipeIngredientDraft(
+                    nextIngredientDraftId++,
+                    rIWI.getIngredient(),
+                    rIWI.getIngredient().getName(),
+                    rIWI.getRecipeIngredient().getQuantity(),
+                    rIWI.getRecipeIngredient().getUnit(),
+                    rIWI.getRecipeIngredient().isUnitLocked()
+            );
+
+            recipeIngredientDraftList.add(draft);
+        }
+
+        List<RecipeInstructionDraft> recipeInstructionDraftList = new ArrayList<>();
+
+        // Initialize list of recipeIngredientDrafts
+        for (RecipeInstruction recipeInstruction : loadedInstructionList) {
+            RecipeInstructionDraft draft = new RecipeInstructionDraft(
+                    nextInstructionDraftId++,
+                    recipeInstruction.getInstruction()
+            );
+
+            recipeInstructionDraftList.add(draft);
+        }
+
+        existingRecipeSynced = true;
+
+        RecipeEditorDraft updatedEditorDraft = new RecipeEditorDraft(
+                recipeDraft,
+                recipeIngredientDraftList,
+                recipeInstructionDraftList);
+
+        editorDraft.setValue(updatedEditorDraft);
     }
     public boolean isNewRecipe() {
         return recipeId == -1L;
@@ -491,39 +564,50 @@ public class RecipeEditorViewModel extends AndroidViewModel {
         List<RecipeIngredientDraft> recipeIngredientDrafts = currentEditorDraft.getRecipeIngredientDrafts();
         List<RecipeInstructionDraft> recipeInstructionDrafts = currentEditorDraft.getRecipeInstructionDrafts();
 
+        Recipe recipe = new Recipe(
+                recipeDraft.getName(),
+                recipeDraft.getDescription()
+        );
+
+        if (!isNewRecipe()) {
+            recipe.setRecipeId(recipeId);
+            recipe.setCreatedAt(loadedRecipe.getCreatedAt());
+        }
+
+        List<RecipeIngredient> recipeIngredientList = new ArrayList<>();
+
+        for (int i = 0; i < recipeIngredientDrafts.size(); i++) {
+            RecipeIngredientDraft currentDraft = recipeIngredientDrafts.get(i);
+            RecipeIngredient recipeIngredient = new RecipeIngredient(
+                    -1L,
+                    currentDraft.getIngredient().getIngredientId(),
+                    currentDraft.getQuantity(),
+                    currentDraft.getUnit(),
+                    currentDraft.isUnitLocked(),
+                    i
+            );
+
+            recipeIngredientList.add(recipeIngredient);
+        }
+
+        List<RecipeInstruction> recipeInstructionList = new ArrayList<>();
+
+        for (int i = 0; i < recipeInstructionDrafts.size(); i++) {
+            RecipeInstructionDraft currentDraft = recipeInstructionDrafts.get(i);
+            RecipeInstruction recipeInstruction = new RecipeInstruction(
+                    -1L,
+                    currentDraft.getInstruction(),
+                    i
+            );
+
+            recipeInstructionList.add(recipeInstruction);
+        }
+
         if(isNewRecipe()) {
-            Recipe recipe = new Recipe(recipeDraft.getName(), recipeDraft.getDescription());
-
-            List<RecipeIngredient> recipeIngredientList = new ArrayList<>();
-
-            for (int i = 0; i < recipeIngredientDrafts.size(); i++) {
-                RecipeIngredientDraft currentDraft = recipeIngredientDrafts.get(i);
-                RecipeIngredient recipeIngredient = new RecipeIngredient(
-                        -1L,
-                        currentDraft.getIngredient().getIngredientId(),
-                        currentDraft.getQuantity(),
-                        currentDraft.getUnit(),
-                        currentDraft.isUnitLocked(),
-                        i
-                );
-
-                recipeIngredientList.add(recipeIngredient);
-            }
-
-            List<RecipeInstruction> recipeInstructionList = new ArrayList<>();
-
-            for (int i = 0; i < recipeInstructionDrafts.size(); i++) {
-                RecipeInstructionDraft currentDraft = recipeInstructionDrafts.get(i);
-                RecipeInstruction recipeInstruction = new RecipeInstruction(
-                        -1L,
-                        currentDraft.getInstruction(),
-                        i
-                );
-
-                recipeInstructionList.add(recipeInstruction);
-            }
-
             repo.saveNewRecipe(recipe, recipeIngredientList, recipeInstructionList);
+        }
+        else {
+            repo.updateRecipe(recipe, recipeIngredientList, recipeInstructionList);
         }
     }
 
@@ -531,37 +615,7 @@ public class RecipeEditorViewModel extends AndroidViewModel {
         return validationState;
     }
 
-
-
-
-
-
-
-
-
-
-
     public LiveData<List<Ingredient>> getAllIngredients() {
         return ingredientCatalogLiveData;
-    }
-
-    public LiveData<Recipe> getRecipe(long recipeId) {
-        return repo.getRecipe(recipeId);
-    }
-
-    public LiveData<List<RecipeIngredientWithIngredient>> getAllIngredientsForRecipe(long recipeId) {
-        return repo.getAllIngredientsForRecipe(recipeId);
-    }
-
-    public LiveData<List<RecipeInstruction>> getAllRecipeInstructionsForRecipe(long recipeId) {
-        return repo.getAllRecipeInstructionsForRecipe(recipeId);
-    }
-
-    public void saveNewRecipe(Recipe recipe, List<RecipeIngredient> recipeIngredientList, List<RecipeInstruction> recipeInstructionList) {
-        repo.saveNewRecipe(recipe, recipeIngredientList, recipeInstructionList);
-    }
-
-    public void updateRecipe(Recipe recipe, List<RecipeIngredient> recipeIngredientList, List<RecipeInstruction> recipeInstructionList) {
-        repo.updateRecipe(recipe, recipeIngredientList, recipeInstructionList);
     }
 }
