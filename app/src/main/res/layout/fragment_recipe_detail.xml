@@ -89,13 +89,15 @@
             <!-- Recipe Ingredient RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipeIngredient_recycler_view"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/ingredients_title_text_view"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -119,13 +121,15 @@
             <!-- Recipe Ingredient RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipeInstruction_recycler_view"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/instructions_title_text_view"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

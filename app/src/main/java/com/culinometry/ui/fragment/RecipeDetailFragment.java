@@ -1,6 +1,7 @@
 package com.culinometry.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,11 +66,8 @@ public class RecipeDetailFragment extends Fragment {
         observeRecipe();
         observeRecipeIngredientWithIngredient();
         observeRecipeInstruction();
-//        setupUnitDropdowns();
-//        setupInputListeners();
 
         setupAppBarMenu(recipeId);
-//        saveButtonPressed();
     }
 
     @Override
@@ -133,6 +131,8 @@ public class RecipeDetailFragment extends Fragment {
         viewModel.getRecipeIngredientWithIngredientList().observe(getViewLifecycleOwner(),
                 recipeIngredientWithIngredients -> {
             if (recipeIngredientWithIngredients != null) {
+                Log.d("RECIPE_TEST",
+                        "Ingredient rows = " + recipeIngredientWithIngredients.size());
                 recipeIngredientAdapter = new RecipeIngredientDetailAdapter(recipeIngredientWithIngredients);
                 binding.recipeIngredientRecyclerView.setAdapter(recipeIngredientAdapter);
             }
@@ -143,6 +143,8 @@ public class RecipeDetailFragment extends Fragment {
         viewModel.getRecipeInstructionList().observe(getViewLifecycleOwner(),
                 recipeInstructions -> {
                     if (recipeInstructions != null) {
+                        Log.d("RECIPE_TEST",
+                                "Instruction rows = " + recipeInstructions.size());
                         recipeInstructionAdapter = new InstructionDetailAdapter(recipeInstructions);
                         binding.recipeInstructionRecyclerView.setAdapter(recipeInstructionAdapter);
                     }
