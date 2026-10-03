@@ -161,7 +161,8 @@ public class CulinometryRepository {
 
     public void updateRecipe(Recipe recipe,
                              List<RecipeIngredient> recipeIngredientList,
-                             List<RecipeInstruction> recipeInstructionList) {
+                             List<RecipeInstruction> recipeInstructionList,
+                             Runnable onComplete) {
         dbExecutor.execute(() -> {
 
             // Because we are not checking for diffs the easiest way to update is to just remove
@@ -205,6 +206,8 @@ public class CulinometryRepository {
 
                 cleanupUnusedIngredients();
             });
+
+            onComplete.run();
         });
     }
 

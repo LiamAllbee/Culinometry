@@ -31,7 +31,9 @@ public class RecipeIngredientDetailAdapter extends ListAdapter<RecipeIngredientD
         public boolean areContentsTheSame(@NonNull RecipeIngredientDisplay oldItem, @NonNull RecipeIngredientDisplay newItem) {
             return oldItem.getQuantity().equals(newItem.getQuantity()) &&
                     Objects.equals(oldItem.getSelectedUnit(), newItem.getSelectedUnit()) &&
-                    oldItem.getIngredientName().equals(newItem.getIngredientName());
+                    oldItem.getIngredientName().equals(newItem.getIngredientName()) &&
+                    oldItem.isConversionEnabled() == newItem.isConversionEnabled() &&
+                    oldItem.getAvailableUnits().equals(newItem.getAvailableUnits());
         }
     };
 

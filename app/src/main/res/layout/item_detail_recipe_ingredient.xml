@@ -44,7 +44,7 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/unit_dropdown"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="none" />
 

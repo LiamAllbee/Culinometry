@@ -43,6 +43,7 @@ public class RecipeEditorViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<Ingredient>> ingredientCatalogLiveData = new MediatorLiveData<>();
     private final MediatorLiveData<RecipeValidationState> validationState = new MediatorLiveData<>();
+    private final MutableLiveData<Boolean> saveComplete = new MutableLiveData<>(false);
 
     public RecipeEditorViewModel(Application application) {
         super(application);
@@ -607,7 +608,7 @@ public class RecipeEditorViewModel extends AndroidViewModel {
             repo.saveNewRecipe(recipe, recipeIngredientList, recipeInstructionList);
         }
         else {
-            repo.updateRecipe(recipe, recipeIngredientList, recipeInstructionList);
+            repo.updateRecipe(recipe, recipeIngredientList, recipeInstructionList, () -> saveComplete.postValue(true));
         }
     }
 
@@ -617,5 +618,13 @@ public class RecipeEditorViewModel extends AndroidViewModel {
 
     public LiveData<List<Ingredient>> getAllIngredients() {
         return ingredientCatalogLiveData;
+    }
+
+    public LiveData<Boolean> getSaveComplete() {
+        return saveComplete;
+    }
+
+    public void saveCompleted() {
+        saveComplete.setValue(false);
     }
 }

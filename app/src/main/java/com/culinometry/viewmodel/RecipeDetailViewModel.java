@@ -64,10 +64,11 @@ public class RecipeDetailViewModel extends AndroidViewModel {
             originalIngredients = ingredients == null
                     ? new ArrayList<>() : new ArrayList<>(ingredients);
 
+            selectedUnits.clear();
             for (RecipeIngredientWithIngredient item : originalIngredients) {
                 RecipeIngredient recipeIngredient = item.getRecipeIngredient();
 
-                selectedUnits.putIfAbsent(recipeIngredient.getRecipeIngredientId(), recipeIngredient.getUnit());
+                selectedUnits.put(recipeIngredient.getRecipeIngredientId(), recipeIngredient.getUnit());
 
             }
 

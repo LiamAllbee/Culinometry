@@ -60,6 +60,7 @@ public class RecipeEditorFragment extends Fragment {
         observeEditorDraft();
         observeIngredientCatalog();
         observeValidationState();
+        observeSaveCompletion();
 
         // Stores the current recipeId into the view models memory
         viewModel.initializeRecipe(recipeId);
@@ -224,6 +225,17 @@ public class RecipeEditorFragment extends Fragment {
                 }
         );
     }
+
+    public void observeSaveCompletion() {
+        viewModel.getSaveComplete().observe(
+                getViewLifecycleOwner(), complete -> {
+                    if (Boolean.TRUE.equals(complete)) {
+                        Navigation.findNavController(requireView()).popBackStack();
+
+                        viewModel.saveCompleted();
+                    }
+                });
+    }
     private void setupAddInstructionButton() {
         binding.addInstructionButton.setOnClickListener(
                 view -> viewModel.addInstruction()
@@ -239,7 +251,6 @@ public class RecipeEditorFragment extends Fragment {
     private void saveButtonPressed() {
         binding.saveRecipeButton.setOnClickListener(view -> {
             viewModel.saveRecipe();
-            Navigation.findNavController(view).popBackStack();
         });
     }
 }
