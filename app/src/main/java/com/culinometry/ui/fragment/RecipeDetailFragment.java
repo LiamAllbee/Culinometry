@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.culinometry.R;
 import com.culinometry.databinding.FragmentRecipeDetailBinding;
+import com.culinometry.ui.adapter.RecipeIngredientAdapter;
 import com.culinometry.ui.adapter.RecipeIngredientDetailAdapter;
 import com.culinometry.ui.adapter.InstructionDetailAdapter;
 import com.culinometry.viewmodel.RecipeDetailViewModel;
@@ -62,6 +63,12 @@ public class RecipeDetailFragment extends Fragment {
 
         // Stores the current ingredient into the view models memory
         viewModel.initializeRecipe(recipeId);
+
+        recipeIngredientAdapter = new RecipeIngredientDetailAdapter((recipeIngredientId, unit) -> {
+            viewModel.setDisplayedUnit(recipeIngredientId, unit);
+        });
+
+        binding.recipeIngredientRecyclerView.setAdapter(recipeIngredientAdapter);
 
         observeRecipe();
         observeRecipeIngredientWithIngredient();
@@ -128,14 +135,9 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private void observeRecipeIngredientWithIngredient() {
-        viewModel.getRecipeIngredientWithIngredientList().observe(getViewLifecycleOwner(),
-                recipeIngredientWithIngredients -> {
-            if (recipeIngredientWithIngredients != null) {
-                Log.d("RECIPE_TEST",
-                        "Ingredient rows = " + recipeIngredientWithIngredients.size());
-                recipeIngredientAdapter = new RecipeIngredientDetailAdapter(recipeIngredientWithIngredients);
-                binding.recipeIngredientRecyclerView.setAdapter(recipeIngredientAdapter);
-            }
+        viewModel.getDisplayedIngredients().observe(getViewLifecycleOwner(),
+                ingredients -> {
+            recipeIngredientAdapter.submitList(ingredients);
         });
     }
 
@@ -143,8 +145,6 @@ public class RecipeDetailFragment extends Fragment {
         viewModel.getRecipeInstructionList().observe(getViewLifecycleOwner(),
                 recipeInstructions -> {
                     if (recipeInstructions != null) {
-                        Log.d("RECIPE_TEST",
-                                "Instruction rows = " + recipeInstructions.size());
                         recipeInstructionAdapter = new InstructionDetailAdapter(recipeInstructions);
                         binding.recipeInstructionRecyclerView.setAdapter(recipeInstructionAdapter);
                     }
