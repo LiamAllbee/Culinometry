@@ -1,19 +1,26 @@
 package com.culinometry.ui.adapter;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.culinometry.R;
 import com.culinometry.databinding.ItemDetailRecipeIngredientBinding;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.RecipeIngredientDisplay;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RecipeIngredientDetailAdapter extends ListAdapter<RecipeIngredientDisplay, RecipeIngredientDetailAdapter.IngredientDetailHolder> {
@@ -68,31 +75,39 @@ public class RecipeIngredientDetailAdapter extends ListAdapter<RecipeIngredientD
 
         private RecipeIngredientDisplay recipeIngredientDisplay;
         private final ItemDetailRecipeIngredientBinding binding;
-        private final ArrayAdapter<Unit> unitDropDownAdapter;
-
 
         public IngredientDetailHolder(ItemDetailRecipeIngredientBinding binding, OnUnitSelectedListener listener) {
             super(binding.getRoot());
             this.binding = binding;
 
-            unitDropDownAdapter = new ArrayAdapter<>(
-                    binding.getRoot().getContext(),
-                    android.R.layout.simple_dropdown_item_1line,
-                    new ArrayList<>());
+            binding.unitButton.setOnClickListener(view -> {
+                if (recipeIngredientDisplay == null || !recipeIngredientDisplay.isConversionEnabled()) {
+                    return;
+                }
 
-            binding.unitDropdown.setAdapter(unitDropDownAdapter);
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), binding.unitButton);
 
-            binding.unitDropdown.setOnItemClickListener(
-                    (parent, view, position, id) -> {
-                        if (recipeIngredientDisplay == null) {
-                            return;
-                        }
+                List<Unit> availableUnits = recipeIngredientDisplay.getAvailableUnits();
 
-                        Unit selected = (Unit) parent.getItemAtPosition(position);
+                for (int i = 0; i < availableUnits.size(); i++) {
+                    popupMenu.getMenu().add(
+                            Menu.NONE,
+                            i,
+                            i,
+                            availableUnits.get(i).toString()
+                    );
+                }
 
-                        listener.onUnitSelected(recipeIngredientDisplay.getRecipeIngredientId(), selected);
-                    }
-            );
+                popupMenu.setOnMenuItemClickListener(menuItem -> {
+                    Unit selected = availableUnits.get(menuItem.getItemId());
+
+                    listener.onUnitSelected(recipeIngredientDisplay.getRecipeIngredientId(), selected);
+
+                    return true;
+                });
+
+                popupMenu.show();
+            });
         }
 
         public void bind(RecipeIngredientDisplay recipeIngredientDisplay) {
@@ -105,13 +120,17 @@ public class RecipeIngredientDetailAdapter extends ListAdapter<RecipeIngredientD
 
             binding.ingredientNameTextView.setText(recipeIngredientDisplay.getIngredientName());
 
-            unitDropDownAdapter.clear();
-            unitDropDownAdapter.addAll(recipeIngredientDisplay.getAvailableUnits());
-            unitDropDownAdapter.notifyDataSetChanged();
+            binding.unitButton.setText(recipeIngredientDisplay.getSelectedUnit().toString());
 
-            binding.unitDropdown.setEnabled(recipeIngredientDisplay.isConversionEnabled());
+            if (recipeIngredientDisplay.isConversionEnabled()) {
+                binding.unitButton.setEnabled(true);
+                binding.unitButton.setIconResource(R.drawable.arrow_drop_down_24px);
+            }
+            else {
+                binding.unitButton.setEnabled(false);
+                binding.unitButton.setIcon(null);
+            }
 
-            binding.unitDropdown.setText(recipeIngredientDisplay.getSelectedUnit().toString(), false);
         }
     }
 }
