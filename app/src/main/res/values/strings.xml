@@ -13,4 +13,5 @@
     <string name="step_text">Step </string>
     <string name="delete_instruction">Delete Instruction</string>
     <string name="instruction_title">Instruction</string>
+    <string name="generate_recipes_report">Generate Recipes Report</string>
 </resources>

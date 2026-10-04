@@ -22,29 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Recipe name input -->
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/name_input_layout"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Recipe Name"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginEnd="24dp"-->
-<!--                android:layout_marginTop="24dp"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                android:enabled="false"-->
-<!--                android:textColorHint="@color/black">-->
 
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/name_edit_text"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textColor="@color/black"/>-->
-
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
+            <!-- Recipe name title-->
             <TextView
                 android:id="@+id/name_edit_text"
                 android:layout_width="0dp"
@@ -59,29 +38,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <!-- Recipe description input -->
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/description_input_layout"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Recipe Description"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginEnd="24dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/name_input_layout"-->
-<!--                android:enabled="false"-->
-<!--                android:textColorHint="@color/black">-->
-
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/description_edit_text"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textColor="@color/black"/>-->
-
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
+            <!-- Recipe description -->
             <TextView
                 android:id="@+id/description_edit_text"
                 android:layout_width="0dp"
@@ -91,8 +48,8 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_edit_text">
@@ -122,7 +79,7 @@
                 android:id="@+id/recipeIngredient_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/ingredients_title_text_view"

@@ -4,15 +4,22 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.culinometry.R;
 import com.culinometry.databinding.FragmentRecipeListBinding;
 import com.culinometry.ui.adapter.RecipeAdapter;
 import com.culinometry.viewmodel.RecipeListViewModel;
@@ -75,6 +82,8 @@ public class RecipeListFragment extends Fragment {
         viewModel.getFilteredRecipes().observe(getViewLifecycleOwner(), recipes -> {
             adapter.submitList(recipes);
         });
+
+        setupAppBarMenu();
     }
 
     @Override
@@ -84,5 +93,30 @@ public class RecipeListFragment extends Fragment {
 
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setupAppBarMenu() {
+        MenuHost menuHost = requireActivity();
+
+        menuHost.addMenuProvider(new MenuProvider() {
+             @Override
+             public void onCreateMenu(@androidx.annotation.NonNull Menu menu, @androidx.annotation.NonNull MenuInflater menuInflater) {
+                 menuInflater.inflate(R.menu.appbar_report_menu, menu);
+             }
+
+             @Override
+             public boolean onMenuItemSelected(@androidx.annotation.NonNull MenuItem menuItem) {
+                 if (menuItem.getItemId() == R.id.action_generate_report) {
+                     androidx.navigation.NavDirections action = RecipeListFragmentDirections.actionToRecipeReportFragment();
+
+                     NavHostFragment.findNavController(requireParentFragment()).navigate(action);
+
+                     return true;
+                 }
+                 return false;
+             }
+
+         },
+        getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 }

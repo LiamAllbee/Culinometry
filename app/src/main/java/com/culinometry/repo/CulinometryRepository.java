@@ -9,12 +9,14 @@ import com.culinometry.dao.IngredientDao;
 import com.culinometry.dao.RecipeDao;
 import com.culinometry.dao.RecipeIngredientDao;
 import com.culinometry.dao.RecipeInstructionDao;
+import com.culinometry.dao.ReportDao;
 import com.culinometry.database.CulinometryDatabase;
 import com.culinometry.model.Ingredient;
 import com.culinometry.model.Recipe;
 import com.culinometry.model.RecipeIngredient;
 import com.culinometry.model.RecipeIngredientWithIngredient;
 import com.culinometry.model.RecipeInstruction;
+import com.culinometry.model.RecipeReportRow;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -27,6 +29,7 @@ public class CulinometryRepository {
     private final RecipeDao recipeDao;
     private final RecipeIngredientDao recipeIngredientDao;
     private final RecipeInstructionDao recipeInstructionDao;
+    private final ReportDao reportDao;
     private final CulinometryDatabase db;
 
     // We only need one background thread since we are not also doing things like network requests,
@@ -55,6 +58,7 @@ public class CulinometryRepository {
         recipeDao = db.recipeDao();
         recipeIngredientDao = db.recipeIngredientDao();
         recipeInstructionDao = db.recipeInstructionDao();
+        reportDao = db.reportDao();
     }
 
     //---------------
@@ -237,5 +241,13 @@ public class CulinometryRepository {
 
     public LiveData<List<RecipeInstruction>> getAllRecipeInstructionsForRecipe(long recipeId) {
         return recipeInstructionDao.getAllRecipeInstructionsForRecipe(recipeId);
+    }
+
+    //---------------
+    // Beginning of ReportDao
+    //---------------
+
+    public LiveData<List<RecipeReportRow>> getRecipeReport() {
+        return reportDao.getRecipeReport();
     }
 }

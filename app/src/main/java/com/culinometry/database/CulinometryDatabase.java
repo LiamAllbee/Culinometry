@@ -7,6 +7,7 @@ import com.culinometry.dao.IngredientDao;
 import com.culinometry.dao.RecipeDao;
 import com.culinometry.dao.RecipeIngredientDao;
 import com.culinometry.dao.RecipeInstructionDao;
+import com.culinometry.dao.ReportDao;
 import com.culinometry.model.Ingredient;
 import com.culinometry.model.Recipe;
 import com.culinometry.model.RecipeIngredient;
@@ -21,4 +22,6 @@ public abstract class CulinometryDatabase extends RoomDatabase {
     public abstract RecipeIngredientDao recipeIngredientDao();
 
     public abstract RecipeInstructionDao recipeInstructionDao();
+
+    public abstract ReportDao reportDao();
 }

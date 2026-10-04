@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_to_recipeEditorFragment"
             app:destination="@id/recipe_editor_fragment"/>
+        <action
+            android:id="@+id/action_to_recipeReportFragment"
+            app:destination="@id/recipe_report_fragment"/>
     </fragment>
 
     <fragment
@@ -36,6 +39,12 @@
             android:name="recipe_id"
             android:defaultValue="-1L"
             app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_report_fragment"
+        android:name="com.culinometry.ui.fragment.RecipeReportFragment"
+        android:label="Recipe Report">
     </fragment>
 
     <fragment
