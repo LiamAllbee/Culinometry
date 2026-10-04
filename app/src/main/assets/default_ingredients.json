@@ -1,0 +1,405 @@
+[
+  {
+    "name": "All-Purpose Flour",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "120",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Bread Flour",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "120",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Whole Wheat Flour",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "113",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Granulated Sugar",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "198",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Brown Sugar, Packed",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "213",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Powdered Sugar",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "113",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Cornstarch",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "28",
+    "massUnit": "GRAM",
+    "referenceVolume": "1/4",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Unsweetened Cocoa Powder",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "42",
+    "massUnit": "GRAM",
+    "referenceVolume": "1/2",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Rolled Oats",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "89",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Panko Breadcrumbs",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "50",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Baking Powder",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "4",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TEASPOON"
+  },
+  {
+    "name": "Baking Soda",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "3",
+    "massUnit": "GRAM",
+    "referenceVolume": "1/2",
+    "volumeUnit": "US_TEASPOON"
+  },
+  {
+    "name": "Table Salt",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "18",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Instant Yeast",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "7",
+    "massUnit": "GRAM",
+    "referenceVolume": "2 1/4",
+    "volumeUnit": "US_TEASPOON"
+  },
+  {
+    "name": "Long-Grain White Rice, Dry",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "99",
+    "massUnit": "GRAM",
+    "referenceVolume": "1/2",
+    "volumeUnit": "US_CUP"
+  },
+
+  {
+    "name": "Butter",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "113",
+    "massUnit": "GRAM",
+    "referenceVolume": "1/2",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Whole Milk",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "244",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Heavy Cream",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "238",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Sour Cream",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "230",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Plain Yogurt",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "245",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Cream Cheese",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "232",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Olive Oil",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "13.5",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Vegetable Oil",
+    "mode": "VOLUME_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Honey",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "21",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Maple Syrup",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "156",
+    "massUnit": "GRAM",
+    "referenceVolume": "1/2",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Peanut Butter",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "32",
+    "massUnit": "GRAM",
+    "referenceVolume": "2",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Mayonnaise",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "13.8",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Water",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "236.6",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Soy Sauce",
+    "mode": "VOLUME_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "White Vinegar",
+    "mode": "VOLUME_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Ketchup",
+    "mode": "VOLUME_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Vanilla Extract",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "14",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Lemon Juice",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "14",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_TABLESPOON"
+  },
+
+  {
+    "name": "Chicken Breast",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Chicken Thigh",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Ground Beef",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Beef Chuck",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Pork Tenderloin",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Pork Shoulder",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Ground Turkey",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Shrimp",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+
+  {
+    "name": "Onion, Diced",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "142",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Garlic, Minced",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "28",
+    "massUnit": "GRAM",
+    "referenceVolume": "2",
+    "volumeUnit": "US_TABLESPOON"
+  },
+  {
+    "name": "Bell Pepper, Chopped",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "142",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Carrots",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Potatoes",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Tomatoes",
+    "mode": "MASS_ONLY",
+    "referenceMass": null,
+    "massUnit": null,
+    "referenceVolume": null,
+    "volumeUnit": null
+  },
+  {
+    "name": "Mushrooms, Sliced",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "78",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Banana, Mashed",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "227",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  },
+  {
+    "name": "Apple, Peeled and Sliced",
+    "mode": "MASS_AND_VOLUME",
+    "referenceMass": "113",
+    "massUnit": "GRAM",
+    "referenceVolume": "1",
+    "volumeUnit": "US_CUP"
+  }
+]

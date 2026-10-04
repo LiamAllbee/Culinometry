@@ -32,6 +32,9 @@ public interface IngredientDao {
     @Insert
     long insert(Ingredient ingredient);
 
+    @Insert
+    void insertAll(List<Ingredient> ingredientList);
+
     @Update
     void update(Ingredient ingredient);
 }

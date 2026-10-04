@@ -2,8 +2,11 @@ package com.culinometry.repo;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.culinometry.dao.IngredientDao;
 import com.culinometry.dao.RecipeDao;
@@ -11,6 +14,7 @@ import com.culinometry.dao.RecipeIngredientDao;
 import com.culinometry.dao.RecipeInstructionDao;
 import com.culinometry.dao.ReportDao;
 import com.culinometry.database.CulinometryDatabase;
+import com.culinometry.database.IngredientSeedLoader;
 import com.culinometry.model.Ingredient;
 import com.culinometry.model.Recipe;
 import com.culinometry.model.RecipeIngredient;
@@ -48,10 +52,24 @@ public class CulinometryRepository {
     }
 
     private CulinometryRepository(Context context) {
+        Context appContext = context.getApplicationContext();
+
         db = Room.databaseBuilder(
-                context.getApplicationContext(),
+                appContext,
                 CulinometryDatabase.class,
                 "culinometry.db")
+                .addCallback(new RoomDatabase.Callback() {
+                    @Override
+                    public void onCreate(@NonNull SupportSQLiteDatabase database) {
+                        super.onCreate(database);
+
+                        dbExecutor.execute(() -> {
+                            List<Ingredient> defaultIngredients = IngredientSeedLoader.load(appContext);
+
+                            db.ingredientDao().insertAll(defaultIngredients);
+                        });
+                    }
+                })
                 .build();
 
         ingredientDao = db.ingredientDao();
