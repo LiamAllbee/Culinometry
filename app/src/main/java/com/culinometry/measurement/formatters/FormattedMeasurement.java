@@ -1,7 +1,5 @@
 package com.culinometry.measurement.formatters;
 
-import com.culinometry.measurement.Unit;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

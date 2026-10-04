@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.culinometry.databinding.ItemRecipeReportRowBinding;
 import com.culinometry.model.RecipeReportRow;
 
-import java.util.List;
-
 public class RecipeReportAdapter extends ListAdapter<RecipeReportRow, RecipeReportAdapter.RecipeReportHolder> {
     private static final DiffUtil.ItemCallback<RecipeReportRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<RecipeReportRow>() {
         @Override

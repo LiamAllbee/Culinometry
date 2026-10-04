@@ -15,7 +15,7 @@ public class MassFormatterTest {
     public void GramRoundTest100_orMore() {
         MassFormatter formatter = new MassFormatter();
 
-        FormattedMeasurement result = formatter.format(226.797);
+        FormattedMeasurement result = formatter.format(226.797, Unit.GRAM);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -27,7 +27,7 @@ public class MassFormatterTest {
     public void GramRoundTest10_orMore() {
         MassFormatter formatter = new MassFormatter();
 
-        FormattedMeasurement result = formatter.format(12.36);
+        FormattedMeasurement result = formatter.format(12.36, Unit.GRAM);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -39,7 +39,7 @@ public class MassFormatterTest {
     public void GramRoundTest1_orMore() {
         MassFormatter formatter = new MassFormatter();
 
-        FormattedMeasurement result = formatter.format(4.273);
+        FormattedMeasurement result = formatter.format(4.273, Unit.GRAM);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -51,7 +51,7 @@ public class MassFormatterTest {
     public void GramRoundTestLessThan1() {
         MassFormatter formatter = new MassFormatter();
 
-        FormattedMeasurement result = formatter.format(0.2734);
+        FormattedMeasurement result = formatter.format(0.2734, Unit.GRAM);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -63,13 +63,13 @@ public class MassFormatterTest {
     public void format_negativeMeasurement_throwsException() {
         MassFormatter formatter = new MassFormatter();
 
-        formatter.format(-5);
+        formatter.format(-5, Unit.GRAM);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void format_nan_throwsException() {
         MassFormatter formatter = new MassFormatter();
 
-        formatter.format(Double.NaN);
+        formatter.format(Double.NaN, Unit.GRAM);
     }
 }

@@ -2,7 +2,6 @@ package com.culinometry.validation;
 
 import com.culinometry.model.RecipeEditorDraft;
 import com.culinometry.model.RecipeIngredientDraft;
-import com.culinometry.model.RecipeInstruction;
 import com.culinometry.model.RecipeInstructionDraft;
 
 import java.util.HashMap;

@@ -10,11 +10,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.culinometry.databinding.ItemRecipeInstructionBinding;
-
-import com.culinometry.model.RecipeIngredientDraft;
-import com.culinometry.model.RecipeInstruction;
 import com.culinometry.model.RecipeInstructionDraft;
-import com.culinometry.validation.RecipeIngredientValidationState;
 
 import org.jspecify.annotations.NonNull;
 

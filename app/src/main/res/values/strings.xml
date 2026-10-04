@@ -14,4 +14,32 @@
     <string name="delete_instruction">Delete Instruction</string>
     <string name="instruction_title">Instruction</string>
     <string name="generate_recipes_report">Generate Recipes Report</string>
+    <string name="search_recipes">Search recipes</string>
+    <string name="ingredient_name">Ingredient Name</string>
+    <string name="measurement_support">Measurement Support</string>
+    <string name="measurement_support_description">Choose how this ingredient can be measured in recipes.</string>
+    <string name="mass_only">Mass Only</string>
+    <string name="volume_only">Volume Only</string>
+    <string name="mass_and_volume"><![CDATA[Mass & Volume]]></string>
+    <string name="conversion_data">Conversion Data</string>
+    <string name="conversion_support_description">Enter mass and volume measurements to enable automatic conversion.</string>
+    <string name="mass">Mass</string>
+    <string name="amount">Amount</string>
+    <string name="unit">Unit</string>
+    <string name="equals">=</string>
+    <string name="volume">Volume</string>
+    <string name="save">save</string>
+    <string name="search_ingredients">Search ingredients</string>
+    <string name="ingredients_title">Ingredients:</string>
+    <string name="instructions_title">Instructions:</string>
+    <string name="recipe_name_hint">Recipe Name</string>
+    <string name="recipe_description_hint">Recipe Description</string>
+    <string name="add_ingredient_button">+ Add Ingredient</string>
+    <string name="add_ingredient_content_description">Add Ingredient</string>
+    <string name="add_instruction_button">+ Add Instruction</string>
+    <string name="add_instruction_content_description">Add Instruction</string>
+    <string name="recipe_report">Recipe Report</string>
+    <string name="recipe">Recipe</string>
+    <string name="ingredients_plural">Ingredients</string>
+    <string name="instructions_plural">Instructions</string>
 </resources>

@@ -2,10 +2,7 @@ package com.culinometry.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
@@ -17,9 +14,7 @@ import com.culinometry.R;
 import com.culinometry.databinding.ItemDetailRecipeIngredientBinding;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.RecipeIngredientDisplay;
-import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

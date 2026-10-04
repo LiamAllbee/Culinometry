@@ -12,9 +12,6 @@ import com.culinometry.model.Ingredient;
 
 import org.jspecify.annotations.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class IngredientAdapter extends ListAdapter<Ingredient, IngredientAdapter.IngredientHolder> {
 
     public interface OnIngredientClickListener {

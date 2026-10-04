@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
-                android:hint="Search ingredients"
+                android:hint="@string/search_ingredients"
                 app:startIconDrawable="@drawable/search_24px"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusTopEnd="16dp"

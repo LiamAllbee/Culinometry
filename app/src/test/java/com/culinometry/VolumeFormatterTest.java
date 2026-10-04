@@ -14,7 +14,7 @@ public class VolumeFormatterTest {
     public void MilliliterRoundTest100_orMore() {
         VolumeFormatter formatter = new VolumeFormatter();
 
-        FormattedMeasurement result = formatter.format(226.797);
+        FormattedMeasurement result = formatter.format(226.797, Unit.MILLILITER);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -26,7 +26,7 @@ public class VolumeFormatterTest {
     public void MilliliterRoundTest10_orMore() {
         VolumeFormatter formatter = new VolumeFormatter();
 
-        FormattedMeasurement result = formatter.format(12.36);
+        FormattedMeasurement result = formatter.format(12.36, Unit.MILLILITER);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -38,7 +38,7 @@ public class VolumeFormatterTest {
     public void MilliliterRoundTest1_orMore() {
         VolumeFormatter formatter = new VolumeFormatter();
 
-        FormattedMeasurement result = formatter.format(4.273);
+        FormattedMeasurement result = formatter.format(4.273, Unit.MILLILITER);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -50,7 +50,7 @@ public class VolumeFormatterTest {
     public void MilliliterRoundTestLessThan1() {
         VolumeFormatter formatter = new VolumeFormatter();
 
-        FormattedMeasurement result = formatter.format(0.2734);
+        FormattedMeasurement result = formatter.format(0.2734, Unit.MILLILITER);
 
         MeasurementPart part = result.getParts().get(0);
 
@@ -62,13 +62,13 @@ public class VolumeFormatterTest {
     public void format_negativeMeasurement_throwsException() {
         VolumeFormatter formatter = new VolumeFormatter();
 
-        formatter.format(-5);
+        formatter.format(-5, Unit.MILLILITER);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void format_nan_throwsException() {
         VolumeFormatter formatter = new VolumeFormatter();
 
-        formatter.format(Double.NaN);
+        formatter.format(Double.NaN, Unit.MILLILITER);
     }
 }

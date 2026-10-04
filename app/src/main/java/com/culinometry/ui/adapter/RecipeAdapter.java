@@ -12,8 +12,6 @@ import com.culinometry.model.Recipe;
 
 import org.jspecify.annotations.NonNull;
 
-import java.util.List;
-
 public class RecipeAdapter extends ListAdapter<Recipe, RecipeAdapter.RecipeHolder> {
 
     public interface OnRecipeClickListener {

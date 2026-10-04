@@ -17,7 +17,6 @@ import com.culinometry.measurement.MeasurementType;
 import com.culinometry.measurement.Unit;
 import com.culinometry.model.Ingredient;
 import com.culinometry.model.RecipeIngredientDraft;
-import com.culinometry.model.RecipeInstructionDraft;
 import com.culinometry.validation.RecipeIngredientValidationState;
 
 import java.util.ArrayList;

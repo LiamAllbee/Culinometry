@@ -1,7 +1,6 @@
 package com.culinometry.database;
 
 import android.content.Context;
-import android.icu.text.UFormat;
 
 import com.culinometry.measurement.IngredientMode;
 import com.culinometry.measurement.Unit;

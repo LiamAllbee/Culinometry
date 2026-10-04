@@ -1,7 +1,6 @@
 package com.culinometry.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,9 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.culinometry.R;
 import com.culinometry.databinding.FragmentRecipeDetailBinding;
-import com.culinometry.ui.adapter.RecipeIngredientAdapter;
-import com.culinometry.ui.adapter.RecipeIngredientDetailAdapter;
 import com.culinometry.ui.adapter.InstructionDetailAdapter;
+import com.culinometry.ui.adapter.RecipeIngredientDetailAdapter;
 import com.culinometry.viewmodel.RecipeDetailViewModel;
 
 public class RecipeDetailFragment extends Fragment {
