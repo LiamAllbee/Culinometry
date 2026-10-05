@@ -251,6 +251,7 @@ public class RecipeEditorFragment extends Fragment {
     private void saveButtonPressed() {
         binding.saveRecipeButton.setOnClickListener(view -> {
             viewModel.saveRecipe();
+            Navigation.findNavController(view).popBackStack();
         });
     }
 }
