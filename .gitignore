@@ -27,3 +27,6 @@ captures/
 # OS-generated files
 .DS_Store
 Thumbs.db
+
+# Generated signed APK output
+/app/release
